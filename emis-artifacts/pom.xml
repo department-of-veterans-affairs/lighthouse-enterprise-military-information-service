@@ -14,7 +14,6 @@
     <jaxws-maven-plugin.version>2.6.2</jaxws-maven-plugin.version>
     <jaxws-rt.version>2.3.2</jaxws-rt.version>
     <lombok-xjc-plugin.version>1.0.3</lombok-xjc-plugin.version>
-    <spotbugs.skip>true</spotbugs.skip>
   </properties>
   <dependencies>
     <dependency>
