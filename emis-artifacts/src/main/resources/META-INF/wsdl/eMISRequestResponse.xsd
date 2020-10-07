@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Department of Veterans Affairs (Department of Veterans Affairs) -->
+<xs:schema xmlns:emisrr="http://viers.va.gov/cdi/eMIS/RequestResponse/v2" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:cdics="http://viers.va.gov/cdi/CDI/commonService/v2"
+           xmlns:emiscs="http://viers.va.gov/cdi/eMIS/commonService/v2"
+           targetNamespace="http://viers.va.gov/cdi/eMIS/RequestResponse/v2" elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+	<xs:import namespace="http://viers.va.gov/cdi/CDI/commonService/v2" schemaLocation="CDICommonService.xsd"/>
+	<xs:import namespace="http://viers.va.gov/cdi/eMIS/commonService/v2" schemaLocation="eMISCommonService.xsd"/>
+	<xs:complexType name="inputEdiPiOrIcn">
+		<xs:sequence>
+			<xs:element name="edipiORicn" type="emiscs:InputEdipiIcn"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inputEdiPi">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Combat Pay RRC 637078-->
+	<xs:complexType name="eMIScombatPayResponseType">
+		<xs:sequence>
+			<xs:element name="combatPay" type="emiscs:CombatPay" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Decorations - Military Award - RRC 637081-->
+	<xs:complexType name="eMISdecorationsMilitaryAwardResponseType">
+		<xs:sequence>
+			<xs:element name="DecorationsMilitaryAward" type="emiscs:Decoration_MilitaryAward" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Deployments - RRC 637128-->
+	<xs:complexType name="eMISdeploymentResponseType">
+		<xs:sequence>
+			<xs:element name="deployment" type="emiscs:Deployment" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--DD214 - RRC 639000-->
+	<xs:complexType name="eMISDD214ResponseType">
+		<xs:sequence>
+			<xs:element name="DD214" type="emiscs:DD214" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Disabilities RRC 637940-->
+	<xs:complexType name="eMISdisabilitiesResponseType">
+		<xs:sequence>
+			<xs:element name="disabilities" type="emiscs:Disability" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Guard Reserve Service Periods-->
+	<xs:complexType name="eMISguardReserveServicePeriodsResponseType">
+		<xs:sequence>
+			<xs:element name="guardReserveServicePeriods" type="emiscs:GuardReserveServicePeriods" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Military Occupation RRC 637083-->
+	<xs:complexType name="eMISmilitaryOccupationResponseType">
+		<xs:sequence>
+			<xs:element name="militaryOccupation" type="emiscs:MilitaryOccupation" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Military Service Basic and Combat Eligibility Information.-->
+	<xs:complexType name="eMISmilitaryServiceEligibilityResponseType">
+		<xs:sequence>
+			<xs:element name="militaryServiceEligibility" type="emiscs:MilitaryServiceEligibility" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Reserve Drill Pay RRC 637080-->
+	<xs:complexType name="eMISreserveDrillDaysResponseType">
+		<xs:sequence>
+			<xs:element name="reserveDrillDays" type="emiscs:ReserveDrillDays" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Retirement RRC 695008-->
+	<xs:complexType name="eMISretirementResponseType">
+		<xs:sequence>
+			<xs:element name="retirement" type="emiscs:Retirement" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Retirement Pay RRC 637077-->
+	<xs:complexType name="eMISretirementPayResponseType">
+		<xs:sequence>
+			<xs:element name="retirementPay" type="emiscs:RetirementPay" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Service Episode - RRC 637011-->
+	<xs:complexType name="eMISserviceEpisodeResponseType">
+		<xs:sequence>
+			<xs:element name="militaryServiceEpisode" type="emiscs:MilitaryServiceEpisode" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Separation Pay RRC 637079-->
+	<xs:complexType name="eMISseparationPayResponseType">
+		<xs:sequence>
+			<xs:element name="separationPay" type="emiscs:SeparationPay" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+		<!-- pay Grade-->
+	<xs:complexType name="eMISpayGradeResponseType">
+		<xs:sequence>
+			<xs:element name="payGrade" type="emiscs:PayGrade" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+		<!--Pay Grade History-->
+	<xs:complexType name="eMISpayGradeHistoryResponseType">
+		<xs:sequence>
+			<xs:element name="payGradeHistory" type="emiscs:PayGradeHistory" minOccurs="0" maxOccurs="5000"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<!--Unit Information - Same as Military Unit or Veteran Unit RRC ??-->
+	<xs:complexType name="eMISunitInformationResponseType">
+		<xs:sequence>
+			<xs:element name="unitInformation" type="emiscs:UnitInformation" minOccurs="0" maxOccurs="500"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Veteran Status RRC 637945-->
+	<xs:complexType name="eMISveteranStatusResponseType">
+		<xs:sequence>
+			<xs:element name="veteranStatus" type="emiscs:VeteranStatus" minOccurs="0"/>
+			<xs:element ref="emisrr:ESSError" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Fault-->
+	<xs:element name="ESSError" type="cdics:ESSErrorType"/>
+	<xs:element name="SOAPError" type="cdics:SOAPErrorType"/>
+</xs:schema>

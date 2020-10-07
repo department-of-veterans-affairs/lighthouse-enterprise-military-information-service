@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Department of Veterans Affairs (Department of Veterans Affairs) -->
+<xs:schema xmlns:cdics="http://viers.va.gov/cdi/CDI/commonService/v2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://viers.va.gov/cdi/CDI/commonService/v2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="ESSResponseCode">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="SUCCESS"/>
+				<xs:enumeration value="ERROR"/>
+				<xs:enumeration value="WARNING"/>
+				<xs:enumeration value="REFUSED"/>
+				<xs:enumeration value="ACCEPT"/>
+				<xs:enumeration value="REJECT"/>
+				<xs:enumeration value="FAIL"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:complexType name="ESSFaultType">
+		<xs:sequence>
+			<xs:element name="Code" type="xs:int"/>
+			<xs:element name="text" type="xs:string"/>
+			<xs:element name="essCode" type="xs:string"/>
+			<xs:element name="essText" type="xs:string"/>
+			<xs:element name="ESSFault" type="cdics:ESSFaultType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ESSErrorType">
+		<xs:sequence>
+			<xs:element name="essTransactionID" type="xs:string" minOccurs="0"/>
+			<xs:element ref="cdics:ESSResponseCode" minOccurs="0"/>
+			<xs:element name="code" type="xs:string" minOccurs="0"/>
+			<xs:element name="text" type="xs:string" minOccurs="0"/>
+			<xs:element name="essCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="essText" type="xs:string" minOccurs="0"/>
+			<xs:element name="severity" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Fatal"/>
+						<xs:enumeration value="Error"/>
+						<xs:enumeration value="Warning"/>
+						<xs:enumeration value="Information"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="timestamp" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="serviceName" type="xs:string" minOccurs="0"/>
+			<xs:element name="hostName" type="xs:string" minOccurs="0"/>
+			<xs:element name="hostIP" type="xs:string" minOccurs="0"/>
+			<xs:element name="userId" type="xs:string" minOccurs="0"/>
+			<xs:element name="subjectId" type="xs:string" minOccurs="0"/>
+			<xs:element name="codePackage" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceDomain" type="xs:string" minOccurs="0"/>
+			<xs:element name="businessDomain" type="xs:string" minOccurs="0"/>
+			<xs:element name="correlationId" type="xs:string" minOccurs="0"/>
+			<xs:element name="sessionId" type="xs:string" minOccurs="0"/>
+			<xs:element name="faultTrace" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SOAPErrorType">
+		<xs:sequence>
+			<xs:element name="Code" type="cdics:envCodeType"/>
+			<xs:element name="Reason" type="xs:string" maxOccurs="500"/>
+			<xs:element name="Node" type="xs:string" minOccurs="0"/>
+			<xs:element name="Role" type="xs:string" minOccurs="0"/>
+			<xs:element name="Detail" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="envCodeType">
+		<xs:sequence>
+			<xs:element name="Value">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="VersionMIsmatch"/>
+						<xs:enumeration value="MustUnsterstand"/>
+						<xs:enumeration value="Sender"/>
+						<xs:enumeration value="Receiver"/>
+						<xs:enumeration value="DataEncodingUnknown"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Subcode" type="xs:string" minOccurs="0" maxOccurs="500"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="detailsType">
+		<xs:sequence>
+			<xs:element name="Detail" type="xs:string"/>
+			<xs:element name="ESSErrror" type="cdics:ESSErrorType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="inputAuditInfo">
+		<xs:sequence>
+			<xs:element name="userId" type="xs:string"/>
+			<xs:element name="sourceSystemName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="inputHeaderInfo" type="cdics:InputHeaderInfo"/>
+	<xs:complexType name="InputHeaderInfo">
+		<xs:sequence>
+			<xs:element name="userId" type="xs:string"/>
+			<xs:element name="sourceSystemName" type="xs:string"/>
+			<xs:element name="transactionId" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

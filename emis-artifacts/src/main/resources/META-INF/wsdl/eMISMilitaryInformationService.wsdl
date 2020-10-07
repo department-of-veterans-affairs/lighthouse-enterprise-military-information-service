@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Department of Veterans Affairs (Department of Veterans Affairs) -->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="urn:eMISMilitaryInformationSerivce"
+             xmlns:mirr="http://viers.va.gov/cdi/eMIS/RequestResponse/MilitaryInfo/v2"
+             xmlns:cdics="http://viers.va.gov/cdi/CDI/commonService/v2"
+             targetNamespace="urn:eMISMilitaryInformationSerivce">
+	<types>
+		<xs:schema>
+			<xs:import schemaLocation="eMISMilitaryInfoRequestResponse.xsd" namespace="http://viers.va.gov/cdi/eMIS/RequestResponse/MilitaryInfo/v2"/>
+		</xs:schema>
+	</types>
+	<message name="CDISoapHeader">
+		<part name="soapHeader" element="cdics:inputHeaderInfo"/>
+	</message>
+	<message name="MilitaryServiceEpisodeRequest">
+		<part name="parameter" element="mirr:eMISserviceEpisodeRequest"/>
+	</message>
+	<message name="MilitaryServiceEpisodeResponse">
+		<part name="parameter" element="mirr:eMISserviceEpisodeResponse"/>
+	</message>
+	<message name="DeploymentRequest">
+		<part name="parameter" element="mirr:eMISdeploymentRequest"/>
+	</message>
+	<message name="DeploymentResponse">
+		<part name="parameter" element="mirr:eMISdeploymentResponse"/>
+	</message>
+	<message name="MilitaryOccupationRequest">
+		<part name="parameter" element="mirr:eMISmilitaryOccupationRequest"/>
+	</message>
+	<message name="MilitaryOccupationResponse">
+		<part name="parameter" element="mirr:eMISmilitaryOccupationResponse"/>
+	</message>
+	<message name="DisabilitiesRequest">
+		<part name="parameter" element="mirr:eMISdisabilitiesRequest"/>
+	</message>
+	<message name="DisabilitiesResponse">
+		<part name="parameter" element="mirr:eMISdisabilitiesResponse"/>
+	</message>
+	<message name="RetirementRequest">
+		<part name="parameter" element="mirr:eMISretirementRequest"/>
+	</message>
+	<message name="RetirementResponse">
+		<part name="parameter" element="mirr:eMISretirementResponse"/>
+	</message>
+	<message name="getGuardReserveServicePeriodsRequest">
+		<part name="parameter" element="mirr:eMISguardReserveServicePeriodsRequest"/>
+	</message>
+	<message name="getGuardReserveServicePeriodsResponse">
+		<part name="parameter" element="mirr:eMISguardReserveServicePeriodsResponse"/>
+	</message>
+	<message name="getUnitInformationRequest">
+		<part name="parameter" element="mirr:eMISunitInformationRequest"/>
+	</message>
+	<message name="getUnitInformationResponse">
+		<part name="parameter" element="mirr:eMISunitInformationResponse"/>
+	</message>
+	<message name="getMilitaryServiceEligibilityRequest">
+		<part name="parameter" element="mirr:eMISmilitaryServiceEligibilityRequest"/>
+	</message>
+	<message name="getMilitaryServiceEligibilityResponse">
+		<part name="parameter" element="mirr:eMISmilitaryServiceEligibilityResponse"/>
+	</message>
+	<portType name="eMISMilitaryInformationSerivcePortTypes">
+		<operation name="getMilitaryServiceEpisodes">
+			<input message="tns:MilitaryServiceEpisodeRequest"/>
+			<output message="tns:MilitaryServiceEpisodeResponse"/>
+		</operation>
+		<operation name="getDeployment">
+			<input message="tns:DeploymentRequest"/>
+			<output message="tns:DeploymentResponse"/>
+		</operation>
+		<operation name="getMilitaryOccupation">
+			<input message="tns:MilitaryOccupationRequest"/>
+			<output message="tns:MilitaryOccupationResponse"/>
+		</operation>
+		<operation name="getDisabilities">
+			<input message="tns:DisabilitiesRequest"/>
+			<output message="tns:DisabilitiesResponse"/>
+		</operation>
+		<operation name="getRetirement">
+			<input message="tns:RetirementRequest"/>
+			<output message="tns:RetirementResponse"/>
+		</operation>
+		<operation name="getGuardReserveServicePeriods">
+			<input message="tns:getGuardReserveServicePeriodsRequest"/>
+			<output message="tns:getGuardReserveServicePeriodsResponse"/>
+		</operation>
+		<operation name="getUnitInformation">
+			<input message="tns:getUnitInformationRequest"/>
+			<output message="tns:getUnitInformationResponse"/>
+		</operation>
+		<operation name="getMilitaryServiceEligibilityInfo">
+			<input message="tns:getMilitaryServiceEligibilityRequest"/>
+			<output message="tns:getMilitaryServiceEligibilityResponse"/>
+		</operation>
+	</portType>
+	<binding name="eMISMilitaryInformationSerivceBinding" type="tns:eMISMilitaryInformationSerivcePortTypes">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="getMilitaryServiceEpisodes">
+			<soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getMilitaryServiceEpisodes/v2" style="document"/>
+			<input>
+				<soap12:body parts="parameter" use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</input>
+			<output>
+				<soap12:body parts="parameter" use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</output>
+		</operation>
+		<operation name="getDeployment">
+			<soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getDeployment/v2" style="document"/>
+			<input>
+				<soap12:body parts="parameter" use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</input>
+			<output>
+				<soap12:body parts="parameter" use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</output>
+		</operation>
+		<operation name="getMilitaryOccupation">
+			<soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getMilitaryOccupation/v2" style="document"/>
+			<input>
+				<soap12:body parts="parameter" use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</input>
+			<output>
+				<soap12:body parts="parameter" use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</output>
+		</operation>
+		<operation name="getDisabilities">
+			<soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getDisabilities/v2" style="document"/>
+			<input>
+				<soap12:body parts="parameter" use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</input>
+			<output>
+				<soap12:body parts="parameter" use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</output>
+		</operation>
+		<operation name="getRetirement">
+			<soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getRetirement/v2" soapActionRequired="true" style="document"/>
+			<input>
+				<soap12:body use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</output>
+		</operation>
+		<operation name="getGuardReserveServicePeriods">
+			<soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getGuardReserveServicePeriods/v2" soapActionRequired="true" style="document"/>
+			<input>
+				<soap12:body use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</output>
+		</operation>
+		<operation name="getUnitInformation">
+			<soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getUnitInformation/v2" soapActionRequired="true" style="document"/>
+			<input>
+				<soap12:body use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</output>
+		</operation>
+		<operation name="getMilitaryServiceEligibilityInfo">
+			<soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getMilitaryServiceEligibilityInfo/v2" soapActionRequired="true" style="document"/>
+			<input>
+				<soap12:body use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</input>
+			<output>
+				<soap12:body use="literal"/>
+				<soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="eMISMilitaryInformationSerivcePortTypes">
+		<port name="eMISMilitaryInformationSerivcePort" binding="tns:eMISMilitaryInformationSerivceBinding">
+			<soap12:address location="REPLACE"/>
+		</port>
+	</service>
+</definitions>
