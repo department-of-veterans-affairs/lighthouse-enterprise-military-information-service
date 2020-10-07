@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Department of Veterans Affairs (Department of Veterans Affairs) -->
+<xs:schema xmlns:emiscs="http://viers.va.gov/cdi/eMIS/commonService/v2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://viers.va.gov/cdi/eMIS/commonService/v2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="AwardsData">
+		<xs:sequence>
+			<xs:element name="awardCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="awardDescription" type="xs:string" minOccurs="0"/>
+			<xs:element name="awardDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Awards">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element name="awards" type="emiscs:AwardsData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CombatPayData">
+		<xs:sequence>
+			<xs:element name="combatPaySegmentIdentifier" type="xs:string"/>
+			<xs:element name="combatPayBeginDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="combatPayEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="combatPayTypeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="combatZoneCountryCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="disabilitySeverancePayCombatCode" type="xs:string" minOccurs="0"/>		
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CombatPay">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="combatPayData" type="emiscs:CombatPayData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Decoration_MilitaryAward">
+		<xs:annotation>
+			<xs:documentation>Awards is defined seperately now</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element name="awardDescription" type="xs:string"/>
+			<xs:element name="awardDate" type="xs:date"/>
+			<xs:element name="awardFromDate" type="xs:date"/>
+			<xs:element name="awardToDate" type="xs:date"/>
+			<xs:element name="branchOfServiceCode" type="xs:string"/>
+			<xs:element name="sourceCode" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DentalIndicatorData">
+		<xs:sequence>
+			<xs:element name="dentalIndicatorSeperationDate" type="xs:date"/>
+			<xs:element name="dentalIndicator" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeploymentEligibilityData">
+		<xs:annotation>
+			<xs:documentation>This is used for getMilitaryServiceEligibilityInfo</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="deploymentSegmentIdentifier" type="xs:string"/>
+			<xs:element name="deploymentStartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="deploymentEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="deploymentProjectCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="DeploymentLocation" type="emiscs:DeploymentLocationEligibilityData" minOccurs="0" maxOccurs="5000"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeploymentData">
+		<xs:sequence>
+			<xs:element name="deploymentSegmentIdentifier" type="xs:string"/>
+			<xs:element name="deploymentStartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="deploymentEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="deploymentProjectCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="deploymentTerminationReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="deploymentTransactionDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="DeploymentLocation" type="emiscs:DeploymentLocation" minOccurs="0" maxOccurs="5000"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Deployment">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="deploymentData" type="emiscs:DeploymentData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeploymentLocationEligibilityData">
+		<xs:annotation>
+			<xs:documentation>This is used for getMilitaryServiceEligibilityInfo</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="deploymentLocationSegmentIdentifier" type="xs:string"/>
+			<xs:element name="deploymentCountryCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="deploymentISOA3CountryCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="deploymentLocationMajorBodyOfWaterCode" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeploymentLocation">
+		<xs:sequence>
+			<xs:element name="deploymentLocationSegmentIdentifier" type="xs:string"/>
+			<xs:element name="deploymentCountry" type="xs:string" minOccurs="0"/>
+			<xs:element name="deploymentISOAlpha3Country" type="xs:string" minOccurs="0"/>
+			<xs:element name="deploymentLocationMajorBodyOfWaterCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="deploymentLocationBeginDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="deploymentLocationEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="deploymentLocationTerminationReasonCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="deploymentLocationTransactionDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DD214">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element name="firstName" type="xs:string"/>
+			<xs:element name="lastName" type="xs:string"/>
+			<xs:element name="middleName" type="xs:string" minOccurs="0"/>
+			<xs:element name="department" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceBranch" type="xs:string" minOccurs="0"/>
+			<xs:element name="componentCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="socialSecurityNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="gradeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="rateCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="rankCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="rankCodeTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="payGrade" type="xs:string" minOccurs="0"/>
+			<xs:element name="dateOfBirth" type="xs:date"/>
+			<xs:element name="reserveObligationTerminationDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="activeDutyPlaceOfEntry" type="xs:string" minOccurs="0"/>
+			<xs:element name="timeOfEntryHomeOfRecord" type="xs:string" minOccurs="0"/>
+			<xs:element name="lastDutyAssignmentAndMajorCommand" type="xs:string" minOccurs="0"/>
+			<xs:element name="stationWhereSeparated" type="xs:string" minOccurs="0"/>
+			<xs:element name="commandTransferredTo" type="xs:string" minOccurs="0"/>
+			<xs:element name="sgliCoverageAmount" type="xs:string" minOccurs="0"/>
+			<xs:element name="primarySpecialtyNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="primarySpecialtyTitle" type="xs:string" minOccurs="0"/>
+			<xs:element name="yearsMonthsInSpecialty" type="xs:string" minOccurs="0"/>
+			<xs:element name="dateEnteredActiveDuty" type="xs:string" minOccurs="0"/>
+			<xs:element name="dateSeparatedActiveDuty" type="xs:string" minOccurs="0"/>
+			<xs:element name="netActiveService" type="xs:string" minOccurs="0"/>
+			<xs:element name="totalPriorActiveService" type="xs:string" minOccurs="0"/>
+			<xs:element name="totalPriorInactiveService" type="xs:string" minOccurs="0"/>
+			<xs:element name="foreignServiceInd" type="xs:string" minOccurs="0"/>
+			<xs:element name="seaServiceInd" type="xs:string" minOccurs="0"/>
+			<xs:element name="initialEntryTraining" type="xs:string" minOccurs="0"/>
+			<xs:element name="payGradeEffectiveDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="decorationCitationMedalorOtherAwardName" type="xs:string" minOccurs="0"/>
+			<xs:element name="militaryEducationCourseTitle" type="xs:string" minOccurs="0"/>
+			<xs:element name="militaryEducationDuration" type="xs:string" minOccurs="0"/>
+			<xs:element name="militaryEducationYearCompleted" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceAcademyCommissionedIndicator" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="commissionedThroughROTCScholarshipIndicator" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="enlistedUnderLoanRepaymentProgramIndicator" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="daysAccruedLeavePaid" type="xs:string" minOccurs="0"/>
+			<xs:element name="requiredDentalServicesProvidedIndicator" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="remarks" type="xs:string" minOccurs="0"/>
+			<xs:element name="postSeparationMailingAddress" type="xs:string" minOccurs="0"/>
+			<xs:element name="memberNearestRelativeName" type="xs:string" minOccurs="0"/>
+			<xs:element name="memberNearestRelativeAddress" type="xs:string" minOccurs="0"/>
+			<xs:element name="copy6ToBeSentVAindicator" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="copy3CentralVAOfficeSendRequestIndicator" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="memberSignature" type="xs:string" minOccurs="0"/>
+			<xs:element name="memberSignatureDate" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorizedSigningOfficialName" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorizedSigningOfficialGrade" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorizedSigningOfficialTitle" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorizedSigningOfficialSignature" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorizedSignedDate" type="xs:date"/>
+			<xs:element name="separationType" type="xs:string" minOccurs="0"/>
+			<xs:element name="characterOfService" type="xs:string" minOccurs="0"/>
+			<xs:element name="separationAuthority" type="xs:string" minOccurs="0"/>
+			<xs:element name="reentryCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeSeparationReasonCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeSeparationReasonTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="separationCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="timeLostDatesThisPeriod" type="xs:string" minOccurs="0"/>
+			<xs:element name="memberRequestsCopy4Indicator" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Disability">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element name="incurredDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="ratingCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="disabilityPercent" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:maxInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="permanentTemporaryIndicator" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="PERM"/>
+						<xs:enumeration value="TEMP"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="payAmount" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GuardReserveServicePeriodsEligibilityData">
+		<xs:annotation>
+			<xs:documentation>This is used for getMilitaryServiceEligibilityInfo</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="guardReserveSegmentIdentifier" type="xs:string"/>
+			<xs:element name="guardReservePeriodStartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="guardReservePeriodEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="guardReservePeriodTerminationReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="guardReservePeriodCharacterOfServiceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeReasonForSeparationCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeReasonForSeparationTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="guardReservePeriodStatuteCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="guardReservePeriodProjectCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="trainingIndicatorCode" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GuardReserveServicePeriodsData">
+		<xs:sequence>
+			<xs:element name="guardReserveSegmentIdentifier" type="xs:string"/>
+			<xs:element name="guardReservePeriodStartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="guardReservePeriodEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="guardReservePeriodTerminationReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="guardReservePeriodCharacterOfServiceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeReasonForSeparationCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeReasonForSeparationTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="guardReservePeriodStatuteCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="guardReservePeriodProjectCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="post911GIBilLossCategoryCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="trainingIndicatorCode" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GuardReserveServicePeriods">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="guardReserveServicePeriodsData" type="emiscs:GuardReserveServicePeriodsData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MilitaryOccupationData">
+		<xs:sequence>
+			<xs:element name="occupationSegmentIdentifier" type="xs:string"/>
+			<xs:element name="dodOccupationType" type="xs:string" minOccurs="0"/>
+			<xs:element name="occupationType" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceSpecificOccupationType" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceSpecificOccupationTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceOccupationDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MilitaryOccupation">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="militaryOccupationData" type="emiscs:MilitaryOccupationData"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PayGradeData"> <!-- return the current pay grade data -->
+		<xs:sequence>
+			<xs:element name="payPlanCode" type="xs:string"/>
+			<xs:element name="PayGradeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceRankNameCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceRankNameTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="payGradeDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PayGrade"> <!-- return the current pay grade data -->
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="payGradeData" type="emiscs:PayGradeData"/>
+		</xs:sequence>
+	</xs:complexType>
+		<xs:complexType name="PayGradeHistoryData"> <!-- return all pay grade data -->
+		<xs:sequence>
+			<xs:element name="payPlanCode" type="xs:string"/>
+			<xs:element name="PayGradeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceRankNameCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceRankNameTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="payGradeDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+		</xs:complexType>
+	
+	
+	<xs:complexType name="PayGradeHistory"> <!-- return all pay grade data -->
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="payGradeHistoryData" type="emiscs:PayGradeHistoryData"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="personnelDutyStatusCodeType">
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="FullTimeRegActive"/>
+						<xs:enumeration value="ReserveActiveDutyAgr"/>
+						<xs:enumeration value="ReserveActiveDutyNonAgr"/>
+						<xs:enumeration value="ReserveNotActiveDuty"/>
+						<xs:enumeration value="GuardActiveDutyAgrTitle10"/>
+						<xs:enumeration value="GuardActiveDutyNonAgrTitle10"/>
+						<xs:enumeration value="GuardActiveDutyAgrTitle32"/>
+						<xs:enumeration value="GuardActiveDutyNonAgrTitle32"/>
+						<xs:enumeration value="GuardNotActiveDuty"/>
+						<xs:enumeration value="ReserveActiveDutyAgrTitle14"/>
+						<xs:enumeration value="ReserveActiveDutyNonAgrTitle14"/>
+						<xs:enumeration value="FormerMilitaryNonDodAffiliated"/>
+						<xs:enumeration value="DodRetiree"/>
+						<xs:enumeration value="NonMilitaryPerson"/>
+						<xs:enumeration value="ServiceAcademyStudent"/>
+					</xs:restriction>
+	</xs:simpleType>
+	
+	
+	
+	<xs:complexType name="MilitaryServiceEpisodeEligibilityData">
+		<xs:annotation>
+			<xs:documentation>This is used for getMilitaryServiceEligibilityInfo</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="serviceEpisodeStartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="serviceEpisodeEndDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="serviceEpisodeTerminationReason" type="xs:string" minOccurs="0"/>			
+			<xs:element name="branchOfServiceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="dischargeCharacterOfServiceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="honorableDischargeForVaPurposeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeReasonForSeparationCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeReasonForSeparationTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="personnelProjectedEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="personnelProjectedEndDateCertaintyCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="guardReserveActiveDuty" type="emiscs:GuardReserveServicePeriodsEligibilityData" minOccurs="0" maxOccurs="500"/>
+			<xs:element name="deployments" type="emiscs:DeploymentEligibilityData" minOccurs="0" maxOccurs="500"/>
+			<xs:element name="combatPay" type="emiscs:CombatPayData" minOccurs="0" maxOccurs="500"/>
+			<xs:element name="payGrade" type="emiscs:PayGradeData" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MilitaryServiceEpisodeData">
+		<xs:sequence>
+			<xs:element name="serviceEpisodeStartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="serviceEpisodeEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="serviceEpisodeTerminationReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="branchOfServiceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="retirementTypeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="personnelProjectedEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="personnelProjectedEndDateCertaintyCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="dischargeCharacterOfServiceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="honorableDischargeForVaPurposeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="personnelStatusChangeTransactionTypeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeReasonForSeparationCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="narrativeReasonForSeparationTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="post911GIBillLossCategoryCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="mgadLossCategoryCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="srLossTypeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="payPlanCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="payGradeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceRankNameCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="serviceRankNameTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="payGradeDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="activeDutyServiceAgreementQuantity" type="xs:integer" minOccurs="0"/>
+			<xs:element name="initialEntryTrainingEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="uniformServiceInitialEntryDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="militaryAccessionSourceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="personnelBeginDateSource" type="xs:string" minOccurs="0"/>
+			<xs:element name="personnelTerminationDateSourceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="activeFederalMilitaryServiceBaseDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="mgsrServiceAgreementDurationYearQuantityCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="dodBeneficiaryTypeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="reserveUnderAge60Code" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MilitaryServiceEpisode">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="militaryServiceEpisodeData" type="emiscs:MilitaryServiceEpisodeData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MilitaryServiceEligibility">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element name="veteranStatus" type="emiscs:VeteranStatus"/>
+			<xs:element name="dentalIndicator" type="emiscs:DentalIndicatorData"/>
+			<xs:element name="purpleHeartOrMoh" type="emiscs:PurpleHeartOrMohData" minOccurs="0" maxOccurs="500"/>
+			<xs:element name="militaryServiceEpisodes" type="emiscs:MilitaryServiceEpisodeEligibilityData" minOccurs="0" maxOccurs="500"/>
+			<xs:element name="awards" type="emiscs:AwardsData" minOccurs="0" maxOccurs="500"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurpleHeartOrMohData">
+		<xs:annotation>
+			<xs:documentation>Purple Heart / Medal of Honor</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="purpleHeartOrMohCode" type="xs:string"/>
+			<xs:element name="purpleHeartOrMohDate" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReserveComponent">
+		<xs:sequence>
+			<xs:element name="reserveComponentBeginDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="reserveComponentName" type="xs:string" minOccurs="0"/>
+			<xs:element name="reserveComponentEndDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetirementData">
+		<xs:sequence>
+			<xs:element name="retirementTypeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="retirementServiceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="retirementBeginDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="retirementTermDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="retirementTerminationReasonCode" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Retirement">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="retirementData" type="emiscs:RetirementData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SeparationPayData">
+		<xs:sequence>
+			<xs:element name="separationPaySegmentIdentifier" type="xs:string"/>
+			<xs:element name="separationPayType" type="xs:string" minOccurs="0"/>
+			<xs:element name="separationPaymentGrossAmount" type="xs:string" minOccurs="0"/>
+			<xs:element name="separationPaymentNetAmount" type="xs:string" minOccurs="0"/>
+			<xs:element name="separationPaymentBeginDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="separationPaymentEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="separationPaymentTerminationReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="disabilitySeverancePayCombatCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="federalIncomeTaxAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="separationPayStatusCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="separationPayRecoupmentGrossAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="separationPayRecoupmentBalanceAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="separationPayRecoupmentMonthlyAmount" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SeparationPay">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="separationPayData" type="emiscs:SeparationPayData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReserveDrillDaysData">
+		<xs:sequence>
+			<xs:element name="reserveDrillSegmentIdentifier" type="xs:string"/>
+			<xs:element name="reserveActiveDutyMonthlyCurrentPaidDays" type="xs:int" minOccurs="0"/>
+			<xs:element name="reserveDrillMonthlyCurrentPaidDays" type="xs:int" minOccurs="0"/>
+			<xs:element name="reserveDrillCurrentMonthlyPaidDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReserveDrillDays">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="reserveDrillDaysData" type="emiscs:ReserveDrillDaysData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetirementPayData">
+		<xs:sequence>
+			<xs:element name="retirementPaySegmentIdentifier" type="xs:string"/>
+			<xs:element name="retirementPaymentMonthlyGrossAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="retirementPayBeginDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="retirementPayEndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="retirementPayTerminationReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="retirementPayStopPaymentReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="dodDisabilityPercentageCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="retirementPaymentStatus" type="xs:string" minOccurs="0"/>
+			<xs:element name="chapter61ServiceGrossPayAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="chapter61EffectiveDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="retirementDateDifferencCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="survivorBenefitPlanPremiumMonthlyCostAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="directRemitterSurvivorBenefitPlanAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="directRemitterSurvivorBenefitPlanEffectiveDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="projectedSurvivorBenefitPlanAnnuityAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="survivorBenefitPlanBeneficiaryTypeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="originalRetirementPayDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="functionalAccountNumberCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="crdpCrscIndicatorCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="crdpCrscStartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="crdpCrscMonthlyAmount" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="CombatRelatedSpCompVaRatingPercentQty" type="xs:string" minOccurs="0"/>
+			<xs:element name="CombatRelatedSpCompOpenSeasonDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="CareerStatusBonusCode" type="xs:string" minOccurs="0"/>
+		    <xs:element name="survivorBenefitPlanPtdMonthsQty" type="xs:decimal" minOccurs="0"/> 
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetirementPay">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="retirementPayData" type="emiscs:RetirementPayData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UnitInformationData">
+		<xs:annotation>
+			<xs:documentation>Same as Military Unit or Veteran Unit</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="unitSegmentIdentifier" type="xs:string"/>
+			<xs:element name="unitIdentificationCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="unitUicTypeCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="unitAssignedDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UnitInformation">
+		<xs:annotation>
+			<xs:documentation>Same as Military Unit or Veteran Unit</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element ref="emiscs:keyData"/>
+			<xs:element name="unitInformation" type="emiscs:UnitInformationData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VeteranStatus">
+		<xs:sequence>
+			<xs:element ref="emiscs:edipi"/>
+			<xs:element name="title38StatusCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="title38StatusTxt" type="xs:string" minOccurs="0"/> <!-- SR 18 -->
+			<xs:element name="post911DeploymentIndicator" type="xs:string" minOccurs="0"/>
+			<xs:element name="post911CombatIndicator" type="xs:string" minOccurs="0"/>
+			<xs:element name="pre911DeploymentIndicator" type="xs:string" minOccurs="0"/>
+			<xs:element name="personnelActiveDutyIndicator" type="xs:string"/> <!-- net 4 is for SR 92 -->
+			<xs:element name="personnelDutyStatusCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="personnelDutyStatusTxt" type="emiscs:personnelDutyStatusCodeType" minOccurs="0"/>
+			<xs:element name="personnelDutyStatusDescTxt" type="xs:string" minOccurs="0"/>
+			<xs:element name="socialSecurityNumber" type="xs:string" minOccurs="0"/> <!-- from here down SR 159-->
+			<xs:element name="personFirstName" type="xs:string" minOccurs="0"/>
+			<xs:element name="personMiddleName" type="xs:string" minOccurs="0"/>
+			<xs:element name="personLastName" type="xs:string" minOccurs="0"/>
+			<xs:element name="personCadencyName" type="xs:string" minOccurs="0"/>
+			<xs:element name="personBirthDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="personSexCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="maritalStatusCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="educationLevelCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="raceCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="ethnicAffinityCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="personDeathIndicatorCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="personDeathDate" type="xs:date" minOccurs="0"/>
+			<!--  SR-000390 -->
+		    <xs:element name="totalRegularActiveServiceDaysQuantity" type="xs:int" minOccurs="0"/>
+			<xs:element name="totalGrasTitle10or14NtDaysQuantity" type="xs:int" minOccurs="0"/>
+			<xs:element name="totalGrasTitle32DaysQuantity" type="xs:int" minOccurs="0"/>
+			<xs:element name="totalGrasTrngDaysQuantity" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="keyData" type="emiscs:KeyData"/>
+	<xs:complexType name="KeyData">
+		<xs:sequence>
+			<xs:element name="personnelOrganizationCode" type="xs:string"/>
+			<xs:element name="personnelCategoryTypeCode" type="xs:string"/>
+			<xs:element name="personnelSegmentIdentifier" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InputEdipiIcn">
+		<xs:sequence>
+			<xs:element name="edipiORicnValue" type="xs:string"/>
+			<xs:element name="inputType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="EDIPI"/>
+						<xs:enumeration value="ICN"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="edipi" type="xs:string"/>
+</xs:schema>
