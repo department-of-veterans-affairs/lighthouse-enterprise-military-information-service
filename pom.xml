@@ -7,7 +7,7 @@
     <version>7.0.14</version>
   </parent>
   <artifactId>emis-apis-parent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>emis-artifacts</module>
