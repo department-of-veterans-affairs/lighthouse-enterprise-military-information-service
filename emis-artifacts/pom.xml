@@ -35,17 +35,39 @@
         <version>${jaxws-maven-plugin.version}</version>
         <executions>
           <execution>
+            <id>V1</id>
             <goals>
               <goal>wsimport</goal>
             </goals>
             <configuration>
-              <wsdlDirectory>src/main/resources/META-INF/wsdl/</wsdlDirectory>
+              <wsdlDirectory>src/main/resources/META-INF/wsdl/v1</wsdlDirectory>
               <wsdlFiles>
                 <wsdlFile>eMISMilitaryInformationService.wsdl</wsdlFile>
               </wsdlFiles>
-              <wsdlLocation>META-INF/wsdl/*</wsdlLocation>
+              <wsdlLocation>META-INF/wsdl/v1/*</wsdlLocation>
               <keep>true</keep>
-              <sourceDestDir>src/main/java</sourceDestDir>
+              <sourceDestDir>src/main/java/v1</sourceDestDir>
+              <args>
+                <arg>-B-Xlombok</arg>
+              </args>
+              <vmArgs>
+                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+              </vmArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>V2</id>
+            <goals>
+              <goal>wsimport</goal>
+            </goals>
+            <configuration>
+              <wsdlDirectory>src/main/resources/META-INF/wsdl/v2</wsdlDirectory>
+              <wsdlFiles>
+                <wsdlFile>eMISMilitaryInformationService.wsdl</wsdlFile>
+              </wsdlFiles>
+              <wsdlLocation>META-INF/wsdl/v2/*</wsdlLocation>
+              <keep>true</keep>
+              <sourceDestDir>src/main/java/v2</sourceDestDir>
               <args>
                 <arg>-B-Xlombok</arg>
               </args>

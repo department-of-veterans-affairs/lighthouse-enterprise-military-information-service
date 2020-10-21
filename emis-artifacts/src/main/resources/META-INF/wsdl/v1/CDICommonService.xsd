@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!--File CDICommonService.xsd, application eMISMilitaryInfoService--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://viers.va.gov/cdi/CDI/commonService/v1" xmlns:cdics="http://viers.va.gov/cdi/CDI/commonService/v1">
+  <xsd:element name="ESSResponseCode">
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="SUCCESS"/>
+        <xsd:enumeration value="ERROR"/>
+        <xsd:enumeration value="WARNING"/>
+        <xsd:enumeration value="REFUSED"/>
+        <xsd:enumeration value="ACCEPT"/>
+        <xsd:enumeration value="REJECT"/>
+        <xsd:enumeration value="FAIL"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  </xsd:element>
+  <xsd:complexType name="ESSFaultType">
+    <xsd:sequence>
+      <xsd:element name="Code" type="xsd:int"/>
+      <xsd:element name="text" type="xsd:string"/>
+      <xsd:element name="essCode" type="xsd:string"/>
+      <xsd:element name="essText" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="ESSFault" type="cdics:ESSFaultType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ESSErrorType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="essTransactionID" type="xsd:string"/>
+      <xsd:element minOccurs="0" ref="cdics:ESSResponseCode"/>
+      <xsd:element minOccurs="0" name="code" type="xsd:int"/>
+      <xsd:element minOccurs="0" name="text" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="essCode" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="essText" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="severity">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Fatal"/>
+            <xsd:enumeration value="Error"/>
+            <xsd:enumeration value="Warning"/>
+            <xsd:enumeration value="Information"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="timestamp" type="xsd:dateTime"/>
+      <xsd:element minOccurs="0" name="serviceName" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="hostName" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="hostIP" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="userId" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="subjectId" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="codePackage" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="serviceDomain" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="businessDomain" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="correlationId" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="sessionId" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="faultTrace" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SOAPErrorType">
+    <xsd:sequence>
+      <xsd:element name="Code" type="cdics:envCodeType"/>
+      <xsd:element maxOccurs="500" name="Reason" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="Node" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="Role" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="Detail" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="envCodeType">
+    <xsd:sequence>
+      <xsd:element name="Value">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="VersionMIsmatch"/>
+            <xsd:enumeration value="MustUnsterstand"/>
+            <xsd:enumeration value="Sender"/>
+            <xsd:enumeration value="Receiver"/>
+            <xsd:enumeration value="DataEncodingUnknown"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element maxOccurs="500" minOccurs="0" name="Subcode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="detailsType">
+    <xsd:sequence>
+      <xsd:element name="Detail" type="xsd:string"/>
+      <xsd:element minOccurs="0" name="ESSErrror" type="cdics:ESSErrorType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="inputAuditInfo">
+    <xsd:sequence>
+      <xsd:element name="userId" type="xsd:string"/>
+      <xsd:element name="sourceSystemName" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="inputHeaderInfo" type="cdics:InputHeaderInfo"/>
+  <xsd:complexType name="InputHeaderInfo">
+    <xsd:sequence>
+      <xsd:element name="userId" type="xsd:string"/>
+      <xsd:element name="sourceSystemName" type="xsd:string"/>
+      <xsd:element name="transactionId"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
