@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!--File eMISRequestResponse.xsd, application eMISMilitaryInfoService--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://viers.va.gov/cdi/eMIS/RequestResponse/v1" xmlns:cdics="http://viers.va.gov/cdi/CDI/commonService/v1" xmlns:emis="http://viers.va.gov/cdi/eMIS/common/v1" xmlns:emiscs="http://viers.va.gov/cdi/eMIS/commonService/v1" xmlns:emisrr="http://viers.va.gov/cdi/eMIS/RequestResponse/v1">
+	<xsd:import namespace="http://viers.va.gov/cdi/CDI/commonService/v1" schemaLocation="CDICommonService.xsd"/>
+	<xsd:import namespace="http://viers.va.gov/cdi/eMIS/commonService/v1" schemaLocation="eMISCommonService.xsd"/>
+	<xsd:complexType name="inputEdiPiOrIcn">
+		<xsd:sequence>
+			<xsd:element name="edipiORicn" type="emiscs:InputEdipiIcn"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="inputEdiPi">
+		<xsd:sequence>
+			<xsd:element ref="emiscs:edipi"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMIScombatPayResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="combatPay" type="emiscs:CombatPay"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISdecorationsMilitaryAwardResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="DecorationsMilitaryAward" type="emiscs:Decoration_MilitaryAward"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISdeploymentResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="deployment" type="emiscs:Deployment"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISDD214ResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="DD214" type="emiscs:DD214"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISdisabilitiesResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="disabilities" type="emiscs:Disability"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISguardReserveServicePeriodsResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="guardReserveServicePeriods" type="emiscs:GuardReserveServicePeriods"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISmilitaryOccupationResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="militaryOccupation" type="emiscs:MilitaryOccupation"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISmilitaryServiceEligibilityResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="militaryServiceEligibility" type="emiscs:MilitaryServiceEligibility"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISreserveDrillDaysResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="reserveDrillDays" type="emiscs:ReserveDrillDays"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISretirementResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="retirement" type="emiscs:Retirement"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISretirementPayResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="retirementPay" type="emiscs:RetirementPay"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISserviceEpisodeResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="militaryServiceEpisode" type="emiscs:MilitaryServiceEpisode"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISseparationPayResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="5000" minOccurs="0" name="separationPay" type="emiscs:SeparationPay"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISunitInformationResponseType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="500" minOccurs="0" name="unitInformation" type="emiscs:UnitInformation"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="eMISveteranStatusResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="veteranStatus" type="emiscs:VeteranStatus"/>
+			<xsd:element minOccurs="0" ref="emisrr:ESSError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="ESSError" type="cdics:ESSErrorType"/>
+	<xsd:element name="SOAPError" type="cdics:SOAPErrorType"/>
+</xsd:schema>
