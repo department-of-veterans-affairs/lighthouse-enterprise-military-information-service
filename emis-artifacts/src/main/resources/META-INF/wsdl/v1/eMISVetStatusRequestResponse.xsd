@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><!--File eMISVetStatusRequestResponse.xsd, application eMISVeteranStatusService--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://viers.va.gov/cdi/eMIS/RequestResponse/VetStatus/v1" xmlns:emisrr="http://viers.va.gov/cdi/eMIS/RequestResponse/v1" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:vsrr="http://viers.va.gov/cdi/eMIS/RequestResponse/VetStatus/v1">
+  <xsd:import namespace="http://viers.va.gov/cdi/eMIS/RequestResponse/v1" schemaLocation="eMISRequestResponse.xsd"/>
+
+  <xsd:element ibmSchExtn:docRoot="true" name="eMISveteranStatusRequest" type="emisrr:inputEdiPiOrIcn"/>
+  <xsd:element ibmSchExtn:docRoot="true" name="eMISveteranStatusResponse" type="emisrr:eMISveteranStatusResponseType"/>
+</xsd:schema>
