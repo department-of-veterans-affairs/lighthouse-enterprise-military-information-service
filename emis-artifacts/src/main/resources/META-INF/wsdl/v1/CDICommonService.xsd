@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!--File CDICommonService.xsd, application eMISMilitaryInfoService--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://viers.va.gov/cdi/CDI/commonService/v1" xmlns:cdics="http://viers.va.gov/cdi/CDI/commonService/v1">
+<?xml version="1.0" encoding="UTF-8"?><!--File CDICommonService.xsd, application eMISVeteranStatusService--><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://viers.va.gov/cdi/CDI/commonService/v1" xmlns:cdics="http://viers.va.gov/cdi/CDI/commonService/v1">
   <xsd:element name="ESSResponseCode">
     <xsd:simpleType>
       <xsd:restriction base="xsd:string">

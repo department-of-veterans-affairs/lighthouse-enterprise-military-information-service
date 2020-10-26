@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!--File eMISVeteranStatusService.wsdl, application eMISVeteranStatusService--><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:eMISVeteranStatusService" xmlns:cdics="http://viers.va.gov/cdi/CDI/commonService/v1" xmlns:emiscs="http://viers.va.gov/cdi/eMIS/commonService/v1" xmlns:emisns="http://viers.va.gov/cdi/eMIS/schema/v1" xmlns:emisrr="http://viers.va.gov/cdi/eMIS/RequestResponse/v1" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:eMISVeteranStatusService" xmlns:vsrr="http://viers.va.gov/cdi/eMIS/RequestResponse/VetStatus/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <documentation>
+    <appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <binding hasEncoding="false" imported="true" name="eMISVeteranStatusServiceBinding" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </appinfo>
+  </documentation>
+  <types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://viers.va.gov/cdi/eMIS/RequestResponse/VetStatus/v1" schemaLocation="eMISVetStatusRequestResponse.xsd"/>
+      <xsd:import namespace="http://viers.va.gov/cdi/eMIS/RequestResponse/v1" schemaLocation="eMISRequestResponse.xsd"/>
+      <xsd:import namespace="http://viers.va.gov/cdi/CDI/commonService/v1" schemaLocation="CDICommonService.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="CDISoapHeader">
+    <part element="cdics:inputHeaderInfo" name="soapHeader"/>
+  </message>
+  <message name="VeteranStatusRequest">
+    <part element="vsrr:eMISveteranStatusRequest" name="parameter"/>
+  </message>
+  <message name="VeteranStatusResponse">
+    <part element="vsrr:eMISveteranStatusResponse" name="parameter"/>
+  </message>
+  <portType name="eMISVeteranStatusServicePortTypes">
+    <operation name="getVeteranStatus">
+      <input message="tns:VeteranStatusRequest"/>
+      <output message="tns:VeteranStatusResponse"/>
+    </operation>
+  </portType>
+  <binding name="eMISVeteranStatusServiceBinding" type="tns:eMISVeteranStatusServicePortTypes">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getVeteranStatus">
+      <soap12:operation soapAction="http://viers.va.gov/cdi/eMIS/getVeteranStatus/v1" style="document"/>
+      <input>
+        <soap12:body parts="parameter" use="literal"/>
+        <soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+      </input>
+      <output>
+        <soap12:body parts="parameter" use="literal"/>
+        <soap12:header message="tns:CDISoapHeader" part="soapHeader" use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="eMISVeteranStatusServicePortTypes">
+    <port binding="tns:eMISVeteranStatusServiceBinding" name="eMISVeteranStatusServicePort">
+      <soap12:address location="http://vaausvrsapp81.aac.va.gov:80/VIERSService/eMIS/v1/VeteranStatusService"/>
+    </port>
+  </service>
+</definitions>
