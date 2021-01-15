@@ -11,7 +11,7 @@
   <version>1.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>emis-artifacts</module>
+    <module>emis-model</module>
     <module>emis-client</module>
   </modules>
 </project>

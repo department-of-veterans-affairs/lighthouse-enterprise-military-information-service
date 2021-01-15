@@ -8,7 +8,7 @@
     <relativePath/>
   </parent>
   <groupId>gov.va.api.lighthouse</groupId>
-  <artifactId>emis-artifacts</artifactId>
+  <artifactId>emis-model</artifactId>
   <version>1.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
   <properties>
