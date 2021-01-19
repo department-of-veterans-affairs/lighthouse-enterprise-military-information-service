@@ -1,13 +1,7 @@
-package gov.va.api.lighthouse.emis.v1;
+package gov.va.api.lighthouse.emis;
 
-import emisveteranstatusservice.EMISVeteranStatusServicePortTypes;
-import emisveteranstatusservice.EMISVeteranStatusServicePortTypes_Service;
-import gov.va.api.lighthouse.emis.EmisConfig;
-import gov.va.viers.cdi.emis.requestresponse.v1.EMISveteranStatusResponseType;
-import gov.va.viers.cdi.emis.requestresponse.v1.InputEdiPiOrIcn;
 import java.io.InputStream;
 import java.net.Socket;
-import java.net.URL;
 import java.security.KeyStore;
 import java.security.Principal;
 import java.security.PrivateKey;
@@ -18,25 +12,12 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509KeyManager;
-import javax.xml.ws.BindingProvider;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.util.ResourceUtils;
 
-@Getter
-public class VeteranStatusServiceClientV1 implements EmisClientV1 {
-  private final SSLContext sslContext;
-
-  private final EmisConfig config;
-
-  private VeteranStatusServiceClientV1(EmisConfig config) {
-    this.config = config;
-    this.sslContext = createSslContext();
-    javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
-  }
-
+public abstract class EmisClient {
   @SneakyThrows
-  private SSLContext createSslContext() {
+  protected SSLContext createSslContext(EmisConfig config) {
     try (InputStream keystoreInputStream =
             ResourceUtils.getURL(config.getKeystorePath()).openStream();
         InputStream truststoreInputStream =
@@ -94,24 +75,5 @@ public class VeteranStatusServiceClientV1 implements EmisClientV1 {
           new SecureRandom());
       return sslContext;
     }
-  }
-
-  @SneakyThrows
-  private EMISVeteranStatusServicePortTypes port() {
-    EMISVeteranStatusServicePortTypes port =
-        new EMISVeteranStatusServicePortTypes_Service(new URL(config.getWsdlLocation()))
-            .getEMISVeteranStatusServicePort();
-    BindingProvider bp = (BindingProvider) port;
-    bp.getRequestContext()
-        .put(
-            com.sun.xml.ws.developer.JAXWSProperties.SSL_SOCKET_FACTORY,
-            sslContext().getSocketFactory());
-    bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getUrl());
-    return port;
-  }
-
-  @Override
-  public EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn) {
-    return port().getVeteranStatus(ediPiOrIcn);
   }
 }
