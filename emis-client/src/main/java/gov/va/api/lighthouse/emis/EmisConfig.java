@@ -20,4 +20,9 @@ import org.springframework.context.annotation.Configuration;
 public class EmisConfig {
   String url;
   String wsdlLocation;
+  String keystorePath;
+  String keystorePassword;
+  String keyAlias;
+  String truststorePath;
+  String truststorePassword;
 }
