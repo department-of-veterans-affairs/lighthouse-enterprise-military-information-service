@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
   <Match>
-    <Class name="gov.va.api.lighthouse.emis.V2EmisMilitaryInformationServiceClient"/>
+    <Class name="gov.va.api.lighthouse.emis.v2.EmisMilitaryInformationServiceClientV2"/>
     <Bug pattern="URLCONNECTION_SSRF_FD"/>
   </Match>
 </FindBugsFilter>

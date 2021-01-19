@@ -1,10 +1,10 @@
-package gov.va.api.lighthouse.emis;
+package gov.va.api.lighthouse.emis.v1;
 
-import emismilitaryinformationserivce.EMISMilitaryInformationSerivcePortTypes;
-import emismilitaryinformationserivce.EMISMilitaryInformationSerivcePortTypes_Service;
-import gov.va.viers.cdi.emis.requestresponse.v2.EMISdeploymentResponseType;
-import gov.va.viers.cdi.emis.requestresponse.v2.EMISserviceEpisodeResponseType;
-import gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn;
+import emisveteranstatusservice.EMISVeteranStatusServicePortTypes;
+import emisveteranstatusservice.EMISVeteranStatusServicePortTypes_Service;
+import gov.va.api.lighthouse.emis.EmisConfig;
+import gov.va.viers.cdi.emis.requestresponse.v1.EMISveteranStatusResponseType;
+import gov.va.viers.cdi.emis.requestresponse.v1.InputEdiPiOrIcn;
 import java.io.InputStream;
 import java.net.Socket;
 import java.net.URL;
@@ -24,19 +24,15 @@ import lombok.SneakyThrows;
 import org.springframework.util.ResourceUtils;
 
 @Getter
-public class V2EmisMilitaryInformationServiceClient implements V2EmisClient {
+public class VeteranStatusServiceClientV1 implements EmisClientV1 {
   private final SSLContext sslContext;
 
   private final EmisConfig config;
 
-  private V2EmisMilitaryInformationServiceClient(EmisConfig config) {
+  private VeteranStatusServiceClientV1(EmisConfig config) {
     this.config = config;
     this.sslContext = createSslContext();
     javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
-  }
-
-  public static V2EmisMilitaryInformationServiceClient of(EmisConfig config) {
-    return new V2EmisMilitaryInformationServiceClient(config);
   }
 
   @SneakyThrows
@@ -100,16 +96,11 @@ public class V2EmisMilitaryInformationServiceClient implements V2EmisClient {
     }
   }
 
-  @Override
-  public EMISdeploymentResponseType deploymentRequest(InputEdiPiOrIcn ediPiOrIcn) {
-    return port().getDeployment(ediPiOrIcn);
-  }
-
   @SneakyThrows
-  private EMISMilitaryInformationSerivcePortTypes port() {
-    EMISMilitaryInformationSerivcePortTypes port =
-        new EMISMilitaryInformationSerivcePortTypes_Service(new URL(config.getWsdlLocation()))
-            .getEMISMilitaryInformationSerivcePort();
+  private EMISVeteranStatusServicePortTypes port() {
+    EMISVeteranStatusServicePortTypes port =
+        new EMISVeteranStatusServicePortTypes_Service(new URL(config.getWsdlLocation()))
+            .getEMISVeteranStatusServicePort();
     BindingProvider bp = (BindingProvider) port;
     bp.getRequestContext()
         .put(
@@ -120,7 +111,7 @@ public class V2EmisMilitaryInformationServiceClient implements V2EmisClient {
   }
 
   @Override
-  public EMISserviceEpisodeResponseType serviceEpisodesRequest(InputEdiPiOrIcn ediPiOrIcn) {
-    return port().getMilitaryServiceEpisodes(ediPiOrIcn);
+  public EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn) {
+    return port().getVeteranStatus(ediPiOrIcn);
   }
 }
