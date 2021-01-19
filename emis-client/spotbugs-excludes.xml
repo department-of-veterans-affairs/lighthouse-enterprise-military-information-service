@@ -4,4 +4,8 @@
     <Class name="gov.va.api.lighthouse.emis.v2.EmisMilitaryInformationServiceClientV2"/>
     <Bug pattern="URLCONNECTION_SSRF_FD"/>
   </Match>
+  <Match>
+    <Class name="gov.va.api.lighthouse.emis.v1.VeteranStatusServiceClientV1"/>
+    <Bug pattern="URLCONNECTION_SSRF_FD"/>
+  </Match>
 </FindBugsFilter>
