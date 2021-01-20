@@ -1,5 +1,7 @@
 package gov.va.api.lighthouse.emis;
 
+import static gov.va.api.lighthouse.emis.EmisClient.createSslContext;
+
 import emisveteranstatusservice.EMISVeteranStatusServicePortTypes;
 import emisveteranstatusservice.EMISVeteranStatusServicePortTypes_Service;
 import gov.va.viers.cdi.emis.requestresponse.v1.EMISveteranStatusResponseType;
@@ -11,12 +13,12 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 
 @Getter
-public class EmisVeteranStatusServiceClientV1 extends EmisClient {
+public class SoapEmisVeteranStatusServiceClient implements EmisVeteranStatusServiceClient {
   private final SSLContext sslContext;
 
   private final EmisConfig config;
 
-  private EmisVeteranStatusServiceClientV1(EmisConfig config) {
+  private SoapEmisVeteranStatusServiceClient(EmisConfig config) {
     this.config = config;
     this.sslContext = createSslContext(config);
     javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
@@ -36,6 +38,7 @@ public class EmisVeteranStatusServiceClientV1 extends EmisClient {
     return port;
   }
 
+  @Override
   public EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn) {
     return port().getVeteranStatus(ediPiOrIcn);
   }

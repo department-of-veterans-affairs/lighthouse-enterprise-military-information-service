@@ -6,8 +6,11 @@ Library used to facilitate interfacing with the EMIS (Enterprise Military Inform
     * V2 Military Information Service `(eMISMilitaryInformationService.wsdl)`
     * V2 eMIS DoD Adapter `(emisDidAdapter.wsdl)`
     * V1 Veteran Status Service `(eMISVeteranStatusService.wsdl)`.
-* emis-client -  Provides a service class that can be imported into applications that require calling an eMIS SOAP Service.
+* emis-client-core - Utility library for shared classes between the different emis client versions.
+* emis-client-v1 -  Provides a service class that can be imported into applications that require calling an eMIS SOAP Service.
+Supported services include:
+    * V1 Veteran Status request
+* emis-client-v2 -  Provides a service class that can be imported into applications that require calling an eMIS SOAP Service.
 Supported services include:
     * V2 Deployments request
     * V2 Service Episodes request
-    * V1 Veteran Status request

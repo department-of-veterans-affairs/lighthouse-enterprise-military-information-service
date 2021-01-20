@@ -9,21 +9,12 @@
   <modelVersion>4.0.0</modelVersion>
   <version>1.0.3-SNAPSHOT</version>
   <groupId>gov.va.api.lighthouse</groupId>
-  <artifactId>emis-client</artifactId>
+  <artifactId>emis-client-v1</artifactId>
   <dependencies>
     <dependency>
       <groupId>gov.va.api.lighthouse</groupId>
-      <artifactId>emis-model</artifactId>
+      <artifactId>emis-client-core</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>

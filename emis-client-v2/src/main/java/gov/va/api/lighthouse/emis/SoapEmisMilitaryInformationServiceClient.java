@@ -1,5 +1,7 @@
 package gov.va.api.lighthouse.emis;
 
+import static gov.va.api.lighthouse.emis.EmisClient.createSslContext;
+
 import emismilitaryinformationserivce.EMISMilitaryInformationSerivcePortTypes;
 import emismilitaryinformationserivce.EMISMilitaryInformationSerivcePortTypes_Service;
 import gov.va.viers.cdi.emis.requestresponse.v2.EMISdeploymentResponseType;
@@ -12,21 +14,23 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 
 @Getter
-public class EmisMilitaryInformationServiceClientV2 extends EmisClient {
+public class SoapEmisMilitaryInformationServiceClient
+    implements EmisMilitaryInformationServiceClient {
   private final SSLContext sslContext;
 
   private final EmisConfig config;
 
-  private EmisMilitaryInformationServiceClientV2(EmisConfig config) {
+  private SoapEmisMilitaryInformationServiceClient(EmisConfig config) {
     this.config = config;
     this.sslContext = createSslContext(config);
     javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
   }
 
-  public static EmisMilitaryInformationServiceClientV2 of(EmisConfig config) {
-    return new EmisMilitaryInformationServiceClientV2(config);
+  public static SoapEmisMilitaryInformationServiceClient of(EmisConfig config) {
+    return new SoapEmisMilitaryInformationServiceClient(config);
   }
 
+  @Override
   public EMISdeploymentResponseType deploymentRequest(InputEdiPiOrIcn ediPiOrIcn) {
     return port().getDeployment(ediPiOrIcn);
   }
@@ -45,6 +49,7 @@ public class EmisMilitaryInformationServiceClientV2 extends EmisClient {
     return port;
   }
 
+  @Override
   public EMISserviceEpisodeResponseType serviceEpisodesRequest(InputEdiPiOrIcn ediPiOrIcn) {
     return port().getMilitaryServiceEpisodes(ediPiOrIcn);
   }

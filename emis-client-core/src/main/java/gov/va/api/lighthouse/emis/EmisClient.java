@@ -15,9 +15,13 @@ import javax.net.ssl.X509KeyManager;
 import lombok.SneakyThrows;
 import org.springframework.util.ResourceUtils;
 
-public abstract class EmisClient {
+public class EmisClient {
+  /**
+   * Utility method to create SSL Context to be used by a client. @Param EmisConfig from client
+   * properties.
+   */
   @SneakyThrows
-  protected SSLContext createSslContext(EmisConfig config) {
+  public static SSLContext createSslContext(EmisConfig config) {
     try (InputStream keystoreInputStream =
             ResourceUtils.getURL(config.getKeystorePath()).openStream();
         InputStream truststoreInputStream =

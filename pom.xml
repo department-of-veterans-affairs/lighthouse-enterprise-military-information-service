@@ -12,6 +12,8 @@
   <packaging>pom</packaging>
   <modules>
     <module>emis-model</module>
-    <module>emis-client</module>
+    <module>emis-client-core</module>
+    <module>emis-client-v1</module>
+    <module>emis-client-v2</module>
   </modules>
 </project>
