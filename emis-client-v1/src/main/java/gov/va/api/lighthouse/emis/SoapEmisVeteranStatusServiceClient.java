@@ -24,6 +24,10 @@ public class SoapEmisVeteranStatusServiceClient implements EmisVeteranStatusServ
     javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
   }
 
+  public static SoapEmisVeteranStatusServiceClient of(EmisConfig config) {
+    return new SoapEmisVeteranStatusServiceClient(config);
+  }
+
   @SneakyThrows
   private EMISVeteranStatusServicePortTypes port() {
     EMISVeteranStatusServicePortTypes port =
