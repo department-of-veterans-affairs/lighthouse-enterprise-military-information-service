@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>gov.va.api.health</groupId>
+    <artifactId>health-apis-parent</artifactId>
+    <version>7.0.20</version>
+    <relativePath/>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <version>1.0.3-SNAPSHOT</version>
+  <groupId>gov.va.api.lighthouse</groupId>
+  <artifactId>emis-client-v2</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>gov.va.api.lighthouse</groupId>
+      <artifactId>emis-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+  </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>health-apis-releases</id>
+      <url>https://tools.health.dev-developer.va.gov/nexus/repository/health-apis-releases/</url>
+    </repository>
+  </distributionManagement>
+</project>

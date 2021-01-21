@@ -2,18 +2,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>emis-apis-parent</artifactId>
     <groupId>gov.va.api.health</groupId>
-    <version>1.0.3-SNAPSHOT</version>
+    <artifactId>api-starter</artifactId>
+    <version>7.0.20</version>
+    <relativePath/>
   </parent>
-  <artifactId>emis-artifacts</artifactId>
+  <groupId>gov.va.api.lighthouse</groupId>
+  <artifactId>emis-model</artifactId>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
   <properties>
     <checkstyle.skip>true</checkstyle.skip>
     <error-prone.args/>
+    <jacoco.skip>true</jacoco.skip>
     <jaxws-maven-plugin.version>2.6.2</jaxws-maven-plugin.version>
     <jaxws-rt.version>2.3.2</jaxws-rt.version>
-    <lombok-xjc-plugin.version>1.0.3</lombok-xjc-plugin.version>
+    <lombok-xjc-plugin.version>1.0.4</lombok-xjc-plugin.version>
+    <spotbugs.skip>true</spotbugs.skip>
+    <jarranger.skip>true</jarranger.skip>
+    <fmt.skip>true</fmt.skip>
   </properties>
   <dependencies>
     <dependency>
@@ -25,6 +32,11 @@
       <groupId>com.sun.xml.ws</groupId>
       <artifactId>jaxws-rt</artifactId>
       <version>${jaxws-rt.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>gov.va.api.health</groupId>
+      <artifactId>service-auto-config</artifactId>
+      <version>${project.parent.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -43,12 +55,13 @@
               <wsdlFiles>
                 <wsdlFile>v1/eMISVeteranStatusService.wsdl</wsdlFile>
                 <wsdlFile>v2/eMISMilitaryInformationService.wsdl</wsdlFile>
+                <wsdlFile>v2/eMISDoDAdapter.wsdl</wsdlFile>
               </wsdlFiles>
-              <wsdlLocation>META-INF/wsdl/*</wsdlLocation>
               <keep>true</keep>
-              <sourceDestDir>src/main/java</sourceDestDir>
+              <sourceDestDir>target/generated-sources</sourceDestDir>
               <args>
                 <arg>-B-Xlombok</arg>
+                <arg>-extension</arg>
               </args>
               <vmArgs>
                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
@@ -64,6 +77,31 @@
           </dependency>
         </dependencies>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources/gov/va/schema/emis/vdrdodadapter/v2</source>
+                <source>${project.build.directory}/generated-sources/gov/va/viers/cdi</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
+  <distributionManagement>
+    <repository>
+      <id>health-apis-releases</id>
+      <url>https://tools.health.dev-developer.va.gov/nexus/repository/health-apis-releases/</url>
+    </repository>
+  </distributionManagement>
 </project>
