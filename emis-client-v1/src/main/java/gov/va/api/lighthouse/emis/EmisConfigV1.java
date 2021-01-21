@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("emis")
+@ConfigurationProperties("emis.v1")
 @Data
 @Accessors(fluent = false)
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class EmisConfig {
+public class EmisConfigV1 {
   String url;
   String wsdlLocation;
   String keystorePath;
