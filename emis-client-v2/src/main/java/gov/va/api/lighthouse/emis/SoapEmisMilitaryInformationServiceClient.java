@@ -1,44 +1,62 @@
 package gov.va.api.lighthouse.emis;
 
+import com.sun.xml.ws.wsdl.parser.InaccessibleWSDLException;
 import emismilitaryinformationserivce.EMISMilitaryInformationSerivcePortTypes;
 import emismilitaryinformationserivce.EMISMilitaryInformationSerivcePortTypes_Service;
 import gov.va.viers.cdi.emis.requestresponse.v2.EMISdeploymentResponseType;
 import gov.va.viers.cdi.emis.requestresponse.v2.EMISserviceEpisodeResponseType;
 import gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
+import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.Optional;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509KeyManager;
 import javax.xml.ws.BindingProvider;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ResourceUtils;
 
 @Getter
+@Slf4j
 public class SoapEmisMilitaryInformationServiceClient
     implements EmisMilitaryInformationServiceClient {
-  private final SSLContext sslContext;
+  private final Optional<SSLContext> sslContext;
 
   private final EmisConfigV2 config;
 
   private SoapEmisMilitaryInformationServiceClient(EmisConfigV2 config) {
     this.config = config;
-    this.sslContext = createSslContext(config);
-    javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+    this.sslContext = createSslContext();
+    sslContext.ifPresent(
+        context ->
+            javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(
+                context.getSocketFactory()));
   }
 
-  /** Create SSL Context. */
+  public static SoapEmisMilitaryInformationServiceClient of(EmisConfigV2 config) {
+    return new SoapEmisMilitaryInformationServiceClient(config);
+  }
+
+  /** Configure SSL for SOAP communication with EMIS. */
   @SneakyThrows
-  public static SSLContext createSslContext(EmisConfigV2 config) {
+  private Optional<SSLContext> createSslContext() {
+    if (!config.isSslEnabled()) {
+      return Optional.empty();
+    }
     try (InputStream keystoreInputStream =
             ResourceUtils.getURL(config.getKeystorePath()).openStream();
         InputStream truststoreInputStream =
@@ -94,12 +112,11 @@ public class SoapEmisMilitaryInformationServiceClient
           new KeyManager[] {keyManager},
           trustManagerFactory.getTrustManagers(),
           new SecureRandom());
-      return sslContext;
+      return Optional.of(sslContext);
+    } catch (IOException | GeneralSecurityException e) {
+      log.error("Failed to create SSL context", e);
+      throw e;
     }
-  }
-
-  public static SoapEmisMilitaryInformationServiceClient of(EmisConfigV2 config) {
-    return new SoapEmisMilitaryInformationServiceClient(config);
   }
 
   @Override
@@ -109,16 +126,26 @@ public class SoapEmisMilitaryInformationServiceClient
 
   @SneakyThrows
   private EMISMilitaryInformationSerivcePortTypes port() {
-    EMISMilitaryInformationSerivcePortTypes port =
-        new EMISMilitaryInformationSerivcePortTypes_Service(new URL(config.getWsdlLocation()))
-            .getEMISMilitaryInformationSerivcePort();
-    BindingProvider bp = (BindingProvider) port;
-    bp.getRequestContext()
-        .put(
-            com.sun.xml.ws.developer.JAXWSProperties.SSL_SOCKET_FACTORY,
-            sslContext().getSocketFactory());
-    bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getUrl());
-    return port;
+    try {
+      EMISMilitaryInformationSerivcePortTypes port =
+          new EMISMilitaryInformationSerivcePortTypes_Service(new URL(config.getWsdlLocation()))
+              .getEMISMilitaryInformationSerivcePort();
+      BindingProvider bp = (BindingProvider) port;
+      if (sslContext().isPresent()) {
+        SSLSocketFactory socketFactory = sslContext().get().getSocketFactory();
+        bp.getRequestContext()
+            .put(com.sun.xml.ws.developer.JAXWSProperties.SSL_SOCKET_FACTORY, socketFactory);
+      }
+      bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, config.getUrl());
+      return port;
+    } catch (InaccessibleWSDLException e) {
+      log.error("WSDL is inaccessible: {}", e.getMessage());
+      e.getErrors().forEach(t -> log.error("Reason {}", t.getMessage()));
+      throw e;
+    } catch (MalformedURLException e) {
+      log.error("Failed to create port for {}", config.getWsdlLocation(), e);
+      throw e;
+    }
   }
 
   @Override
