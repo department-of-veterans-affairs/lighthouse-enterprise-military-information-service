@@ -4,6 +4,7 @@ import com.sun.xml.ws.wsdl.parser.InaccessibleWSDLException;
 import emismilitaryinformationserivce.EMISMilitaryInformationSerivcePortTypes;
 import emismilitaryinformationserivce.EMISMilitaryInformationSerivcePortTypes_Service;
 import gov.va.viers.cdi.emis.requestresponse.v2.EMISdeploymentResponseType;
+import gov.va.viers.cdi.emis.requestresponse.v2.EMISguardReserveServicePeriodsResponseType;
 import gov.va.viers.cdi.emis.requestresponse.v2.EMISserviceEpisodeResponseType;
 import gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn;
 import java.io.IOException;
@@ -122,6 +123,12 @@ public class SoapEmisMilitaryInformationServiceClient
   @Override
   public EMISdeploymentResponseType deploymentRequest(InputEdiPiOrIcn ediPiOrIcn) {
     return port().getDeployment(ediPiOrIcn);
+  }
+
+  @Override
+  public EMISguardReserveServicePeriodsResponseType guardReserveServiceRequest(
+      InputEdiPiOrIcn ediPiOrIcn) {
+    return port().getGuardReserveServicePeriods(ediPiOrIcn);
   }
 
   @SneakyThrows
