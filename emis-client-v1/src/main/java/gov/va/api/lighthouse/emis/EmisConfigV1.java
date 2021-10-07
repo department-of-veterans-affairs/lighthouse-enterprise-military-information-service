@@ -26,4 +26,6 @@ public class EmisConfigV1 {
   String keyAlias;
   String truststorePath;
   String truststorePassword;
+  Long restTemplateConnectionTimeout;
+  Long restTemplateReadTimeout;
 }

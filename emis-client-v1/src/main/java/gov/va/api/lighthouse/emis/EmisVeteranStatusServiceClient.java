@@ -2,11 +2,10 @@ package gov.va.api.lighthouse.emis;
 
 import gov.va.viers.cdi.emis.requestresponse.v1.EMISveteranStatusResponseType;
 import gov.va.viers.cdi.emis.requestresponse.v1.InputEdiPiOrIcn;
-import java.io.IOException;
-import org.apache.http.HttpResponse;
+import org.springframework.http.ResponseEntity;
 
 public interface EmisVeteranStatusServiceClient {
   EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn);
 
-  HttpResponse wsdl() throws IOException;
+  ResponseEntity<String> wsdl();
 }

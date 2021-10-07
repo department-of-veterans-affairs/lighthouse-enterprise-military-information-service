@@ -14,5 +14,6 @@
     <module>emis-model</module>
     <module>emis-client-v1</module>
     <module>emis-client-v2</module>
+    <module>common</module>
   </modules>
 </project>
