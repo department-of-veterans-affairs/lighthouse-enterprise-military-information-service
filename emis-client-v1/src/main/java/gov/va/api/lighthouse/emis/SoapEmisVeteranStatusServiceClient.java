@@ -27,6 +27,10 @@ import javax.xml.ws.BindingProvider;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.util.ResourceUtils;
 
 @Getter
@@ -140,6 +144,16 @@ public class SoapEmisVeteranStatusServiceClient implements EmisVeteranStatusServ
       throw e;
     }
   }
+
+  @Override
+    public HttpResponse wsdl() throws IOException {
+        SSLContext context = null;
+        if(sslContext().isPresent()) {
+            context = sslContext().get();
+        }
+        HttpClient client = HttpClients.custom().setSSLContext(context).build();
+        return client.execute(new HttpGet(config.getWsdlLocation()));
+    }
 
   @Override
   public EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn) {
