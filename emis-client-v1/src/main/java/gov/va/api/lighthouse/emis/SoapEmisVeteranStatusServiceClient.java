@@ -146,17 +146,17 @@ public class SoapEmisVeteranStatusServiceClient implements EmisVeteranStatusServ
   }
 
   @Override
-    public HttpResponse wsdl() throws IOException {
-        SSLContext context = null;
-        if(sslContext().isPresent()) {
-            context = sslContext().get();
-        }
-        HttpClient client = HttpClients.custom().setSSLContext(context).build();
-        return client.execute(new HttpGet(config.getWsdlLocation()));
-    }
-
-  @Override
   public EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn) {
     return port().getVeteranStatus(ediPiOrIcn);
+  }
+
+  @Override
+  public HttpResponse wsdl() throws IOException {
+    SSLContext context = null;
+    if (sslContext().isPresent()) {
+      context = sslContext().get();
+    }
+    HttpClient client = HttpClients.custom().setSSLContext(context).build();
+    return client.execute(new HttpGet(config.getWsdlLocation().toString()));
   }
 }

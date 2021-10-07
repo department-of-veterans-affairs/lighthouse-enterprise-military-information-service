@@ -4,4 +4,14 @@
     <Class name="gov.va.api.lighthouse.emis.SoapEmisVeteranStatusServiceClient"/>
     <Bug pattern="URLCONNECTION_SSRF_FD"/>
   </Match>
+  <!--
+  This finding is reported in wsdl method, where the wsdl url is being provided
+  as a configuration value to the HttpGet object.
+  This url is provided as configuration and is not user or
+  caller specified.
+  -->
+  <Match>
+    <Class name="gov.va.api.lighthouse.emis.SoapEmisVeteranStatusServiceClient"/>
+    <Bug pattern="HTTP_PARAMETER_POLLUTION"/>
+  </Match>
 </FindBugsFilter>
