@@ -118,6 +118,7 @@ public class SoapEmisVeteranStatusServiceClient implements EmisVeteranStatusServ
     }
   }
 
+  /** Performs health check by grabbing wsdl. If the wsdl is not accessible an error is thrown. */
   @SneakyThrows
   @Override
   public ResponseEntity<String> health() {
