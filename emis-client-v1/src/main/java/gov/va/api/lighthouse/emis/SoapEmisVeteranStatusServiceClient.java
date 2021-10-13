@@ -27,6 +27,7 @@ import javax.xml.ws.BindingProvider;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 
 @Getter
@@ -115,6 +116,14 @@ public class SoapEmisVeteranStatusServiceClient implements EmisVeteranStatusServ
       log.error("Failed to create SSL context", e);
       throw e;
     }
+  }
+
+  /** Performs health check by grabbing wsdl. If the wsdl is not accessible an error is thrown. */
+  @SneakyThrows
+  @Override
+  public ResponseEntity<String> health() {
+    port();
+    return ResponseEntity.ok("Up");
   }
 
   @SneakyThrows
