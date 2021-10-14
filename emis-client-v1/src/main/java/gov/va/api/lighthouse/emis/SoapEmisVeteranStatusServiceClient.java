@@ -27,6 +27,7 @@ import javax.xml.ws.BindingProvider;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 
@@ -119,15 +120,20 @@ public class SoapEmisVeteranStatusServiceClient implements EmisVeteranStatusServ
   }
 
   /** Performs health check by grabbing wsdl. If the wsdl is not accessible an error is thrown. */
-  @SneakyThrows
   @Override
   public ResponseEntity<String> health() {
-    port();
+    try {
+      port();
+    } catch (InaccessibleWSDLException e) {
+      return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Down");
+    } catch (MalformedURLException e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Down");
+    }
     return ResponseEntity.ok("Up");
   }
 
-  @SneakyThrows
-  private EMISVeteranStatusServicePortTypes port() {
+  private EMISVeteranStatusServicePortTypes port()
+      throws InaccessibleWSDLException, MalformedURLException {
     try {
       EMISVeteranStatusServicePortTypes port =
           new EMISVeteranStatusServicePortTypes_Service(new URL(config.getWsdlLocation()))
@@ -151,6 +157,7 @@ public class SoapEmisVeteranStatusServiceClient implements EmisVeteranStatusServ
   }
 
   @Override
+  @SneakyThrows
   public EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn) {
     return port().getVeteranStatus(ediPiOrIcn);
   }
