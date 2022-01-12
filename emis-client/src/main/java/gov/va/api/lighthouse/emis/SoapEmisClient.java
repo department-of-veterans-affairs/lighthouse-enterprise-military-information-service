@@ -61,11 +61,11 @@ public class SoapEmisClient implements EmisClient {
       gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn ediPiOrIcn) {
     try {
       var port =
-              port(
-                      config.getMilitaryInformationServiceV2(),
-                      url ->
-                              new EMISMilitaryInformationSerivcePortTypes_Service(url)
-                                      .getEMISMilitaryInformationSerivcePort());
+          port(
+              config.getMilitaryInformationServiceV2(),
+              url ->
+                  new EMISMilitaryInformationSerivcePortTypes_Service(url)
+                      .getEMISMilitaryInformationSerivcePort());
       return port.getDeployment(ediPiOrIcn);
     } catch (ServerSOAPFaultException e) {
       log.error("Received invalid response from service: {}", e.getMessage());
@@ -78,11 +78,11 @@ public class SoapEmisClient implements EmisClient {
       gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn ediPiOrIcn) {
     try {
       var port =
-              port(
-                      config.getMilitaryInformationServiceV2(),
-                      url ->
-                              new EMISMilitaryInformationSerivcePortTypes_Service(url)
-                                      .getEMISMilitaryInformationSerivcePort());
+          port(
+              config.getMilitaryInformationServiceV2(),
+              url ->
+                  new EMISMilitaryInformationSerivcePortTypes_Service(url)
+                      .getEMISMilitaryInformationSerivcePort());
       return port.getGuardReserveServicePeriods(ediPiOrIcn);
     } catch (ServerSOAPFaultException e) {
       log.error("Received invalid response from service: {}", e.getMessage());
@@ -129,11 +129,11 @@ public class SoapEmisClient implements EmisClient {
       gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn ediPiOrIcn) {
     try {
       var port =
-              port(
-                      config.getMilitaryInformationServiceV2(),
-                      url ->
-                              new EMISMilitaryInformationSerivcePortTypes_Service(url)
-                                      .getEMISMilitaryInformationSerivcePort());
+          port(
+              config.getMilitaryInformationServiceV2(),
+              url ->
+                  new EMISMilitaryInformationSerivcePortTypes_Service(url)
+                      .getEMISMilitaryInformationSerivcePort());
       return port.getMilitaryServiceEpisodes(ediPiOrIcn);
     } catch (ServerSOAPFaultException e) {
       log.error("Received invalid response from service: {}", e.getMessage());
@@ -145,21 +145,18 @@ public class SoapEmisClient implements EmisClient {
   public EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn) {
     try {
       var port =
-              port(
-                      config.getVeteranStatusServiceV1(),
-                      url ->
-                              new EMISVeteranStatusServicePortTypes_Service(url)
-                                      .getEMISVeteranStatusServicePort());
+          port(
+              config.getVeteranStatusServiceV1(),
+              url ->
+                  new EMISVeteranStatusServicePortTypes_Service(url)
+                      .getEMISVeteranStatusServicePort());
       return port.getVeteranStatus(ediPiOrIcn);
-    }
-    catch (ServerSOAPFaultException e) {
+    } catch (ServerSOAPFaultException e) {
       log.error("Received invalid response from service: {}", e.getMessage());
       throw new Exceptions.InvalidServiceResponse(e.getMessage(), e);
     }
   }
 
-  /** Performs health check by grabbing wsdl. If the wsdl is not accessible an error is thrown. */
-  @SneakyThrows
   @Override
   public ResponseEntity<String> veteranStatusServiceV1Health() {
     try {
