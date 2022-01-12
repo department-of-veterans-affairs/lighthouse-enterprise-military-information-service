@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  gov.va.api.lighthouse.emis.EmisConfigV2
+  gov.va.api.lighthouse.emis.EmisClientConfig
