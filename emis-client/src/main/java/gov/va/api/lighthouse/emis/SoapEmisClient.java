@@ -38,7 +38,7 @@ public class SoapEmisClient implements EmisClient {
     if (!ssl.isEnabled()) {
       return;
     }
-    log.info("Initializing BGS SSL");
+    log.info("Initializing eMIS SSL");
     try (var inputStream = ResourceUtils.getURL(ssl.getKeyStore().getPath()).openStream()) {
       var ks = KeyStore.getInstance("JKS");
       ks.load(inputStream, ssl.getKeyStore().getPassword().toCharArray());
