@@ -8,11 +8,10 @@
   </parent>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>emis-parent</artifactId>
-  <version>3.0.2-SNAPSHOT</version>
+  <version>4.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>emis-model</module>
-    <module>emis-client-v1</module>
-    <module>emis-client-v2</module>
+    <module>emis-client</module>
   </modules>
 </project>
