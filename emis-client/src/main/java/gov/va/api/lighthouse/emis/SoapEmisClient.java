@@ -13,8 +13,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyStore;
 import java.security.SecureRandom;
+import java.util.Optional;
 import java.util.function.Function;
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
@@ -26,17 +26,23 @@ import org.springframework.util.ResourceUtils;
 
 @Slf4j
 public class SoapEmisClient implements EmisClient {
+  private final Optional<SSLContext> sslContext;
+
   private final EmisClientConfig config;
 
   private SoapEmisClient(EmisClientConfig config) {
     this.config = config;
-    initSsl(config.getSsl());
+    this.sslContext = createSslContext(config.getSsl());
+  }
+
+  public static SoapEmisClient of(EmisClientConfig config) {
+    return new SoapEmisClient(config);
   }
 
   @SneakyThrows
-  private static void initSsl(EmisClientConfig.Ssl ssl) {
+  private Optional<SSLContext> createSslContext(EmisClientConfig.Ssl ssl) {
     if (!ssl.isEnabled()) {
-      return;
+      return Optional.empty();
     }
     log.info("Initializing eMIS SSL");
     try (var inputStream = ResourceUtils.getURL(ssl.getKeyStore().getPath()).openStream()) {
@@ -44,16 +50,15 @@ public class SoapEmisClient implements EmisClient {
       ks.load(inputStream, ssl.getKeyStore().getPassword().toCharArray());
       var kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
       kmf.init(ks, ssl.getKeyStore().getKeyPassword().toCharArray());
+      var trustStream = ResourceUtils.getURL(ssl.getTrustStore().getPath()).openStream();
+      var ts = KeyStore.getInstance("JKS");
+      ts.load(trustStream, ssl.getTrustStore().getPassword().toCharArray());
       var tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-      tmf.init(ks);
+      tmf.init(ts);
       var sslContext = SSLContext.getInstance("TLS");
       sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), new SecureRandom());
-      HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+      return Optional.of(sslContext);
     }
-  }
-
-  public static SoapEmisClient of(EmisClientConfig config) {
-    return new SoapEmisClient(config);
   }
 
   @Override
@@ -110,6 +115,13 @@ public class SoapEmisClient implements EmisClient {
   private <T> T port(EmisClientConfig.Service svc, Function<URL, T> toPort) {
     try {
       T port = toPort.apply(new URL(svc.getWsdl()));
+      if (sslContext.isPresent()) {
+        ((BindingProvider) port)
+            .getRequestContext()
+            .put(
+                "com.sun.xml.ws.transport.https.client.SSLSocketFactory",
+                sslContext.get().getSocketFactory());
+      }
       ((BindingProvider) port)
           .getRequestContext()
           .put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, svc.getUrl());
