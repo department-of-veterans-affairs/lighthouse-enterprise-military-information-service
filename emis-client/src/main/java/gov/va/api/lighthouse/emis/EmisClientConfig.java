@@ -42,6 +42,16 @@ public class EmisClientConfig {
   @NoArgsConstructor
   @AllArgsConstructor
   @Accessors(fluent = false)
+  public static class TrustStore {
+    private String path;
+    private String password;
+  }
+
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Accessors(fluent = false)
   public static class Service {
     private String url;
 
@@ -57,5 +67,7 @@ public class EmisClientConfig {
     @Builder.Default private boolean enabled = true;
 
     private KeyStore keyStore;
+
+    private TrustStore trustStore;
   }
 }
