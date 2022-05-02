@@ -7,7 +7,7 @@
     <relativePath/>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <version>4.0.2-SNAPSHOT</version>
+  <version>4.0.2</version>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>emis-client</artifactId>
   <dependencies>
