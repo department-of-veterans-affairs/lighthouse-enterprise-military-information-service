@@ -4,7 +4,7 @@
   <parent>
     <groupId>gov.va.api.health</groupId>
     <artifactId>api-starter</artifactId>
-    <version>9.0.6</version>
+    <version>11.0.3</version>
     <relativePath/>
   </parent>
   <groupId>gov.va.api.lighthouse</groupId>
@@ -98,10 +98,4 @@
       </plugin>
     </plugins>
   </build>
-  <distributionManagement>
-    <repository>
-      <id>health-apis-releases</id>
-      <url>https://tools.health.dev-developer.va.gov/nexus/repository/health-apis-releases/</url>
-    </repository>
-  </distributionManagement>
 </project>
