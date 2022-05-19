@@ -21,6 +21,7 @@
     <spotbugs.skip>true</spotbugs.skip>
     <jarranger.skip>true</jarranger.skip>
     <fmt.skip>true</fmt.skip>
+    <github.repository-name>lighthouse-enterprise-military-information-service</github.repository-name>
   </properties>
   <dependencies>
     <dependency>

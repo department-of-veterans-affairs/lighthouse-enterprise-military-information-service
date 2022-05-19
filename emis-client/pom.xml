@@ -10,6 +10,9 @@
   <version>4.0.3-SNAPSHOT</version>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>emis-client</artifactId>
+  <properties>
+    <github.repository-name>lighthouse-enterprise-military-information-service</github.repository-name>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>gov.va.api.lighthouse</groupId>
