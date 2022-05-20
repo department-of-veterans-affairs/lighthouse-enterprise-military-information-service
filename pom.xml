@@ -4,11 +4,11 @@
   <parent>
     <groupId>gov.va.api.health</groupId>
     <artifactId>health-apis-parent</artifactId>
-    <version>11.0.3</version>
+    <version>11.0.4</version>
   </parent>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>emis-parent</artifactId>
-  <version>4.0.3-SNAPSHOT</version>
+  <version>4.0.3</version>
   <packaging>pom</packaging>
   <properties>
     <github.repository-name>lighthouse-enterprise-military-information-service</github.repository-name>
