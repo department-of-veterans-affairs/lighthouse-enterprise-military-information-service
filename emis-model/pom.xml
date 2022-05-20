@@ -4,7 +4,7 @@
   <parent>
     <groupId>gov.va.api.health</groupId>
     <artifactId>api-starter</artifactId>
-    <version>9.0.6</version>
+    <version>11.0.3</version>
     <relativePath/>
   </parent>
   <groupId>gov.va.api.lighthouse</groupId>
@@ -21,6 +21,7 @@
     <spotbugs.skip>true</spotbugs.skip>
     <jarranger.skip>true</jarranger.skip>
     <fmt.skip>true</fmt.skip>
+    <github.repository-name>lighthouse-enterprise-military-information-service</github.repository-name>
   </properties>
   <dependencies>
     <dependency>
@@ -98,10 +99,4 @@
       </plugin>
     </plugins>
   </build>
-  <distributionManagement>
-    <repository>
-      <id>health-apis-releases</id>
-      <url>https://tools.health.dev-developer.va.gov/nexus/repository/health-apis-releases/</url>
-    </repository>
-  </distributionManagement>
 </project>

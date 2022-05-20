@@ -3,13 +3,16 @@
   <parent>
     <groupId>gov.va.api.health</groupId>
     <artifactId>health-apis-parent</artifactId>
-    <version>9.0.6</version>
+    <version>11.0.3</version>
     <relativePath/>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <version>4.0.3-SNAPSHOT</version>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>emis-client</artifactId>
+  <properties>
+    <github.repository-name>lighthouse-enterprise-military-information-service</github.repository-name>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>gov.va.api.lighthouse</groupId>
@@ -21,10 +24,4 @@
       <artifactId>lombok</artifactId>
     </dependency>
   </dependencies>
-  <distributionManagement>
-    <repository>
-      <id>health-apis-releases</id>
-      <url>https://tools.health.dev-developer.va.gov/nexus/repository/health-apis-releases/</url>
-    </repository>
-  </distributionManagement>
 </project>
