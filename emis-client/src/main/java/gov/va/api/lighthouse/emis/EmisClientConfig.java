@@ -1,5 +1,6 @@
 package gov.va.api.lighthouse.emis;
 
+import java.time.Duration;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @EnableConfigurationProperties
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@PropertySource("emis-client-default.properties")
 @Accessors(fluent = false)
 public class EmisClientConfig {
   private Ssl ssl;
@@ -23,6 +26,10 @@ public class EmisClientConfig {
   private Service militaryInformationServiceV2;
 
   private Service veteranStatusServiceV1;
+
+  private Duration connectionTimeout;
+
+  private Duration readTimeout;
 
   @Data
   @Builder
