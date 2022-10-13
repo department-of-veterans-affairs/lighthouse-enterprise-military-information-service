@@ -25,8 +25,6 @@ import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class MockServerTest {
-  private static int wiremockPort;
-
   private static WireMockServer wireMockServer;
 
   @AfterAll
@@ -113,7 +111,6 @@ public class MockServerTest {
         "/VIERSService/eMIS/v2/MilitaryInformationService.wsdl",
         Duration.ZERO);
     wireMockServer.start();
-    wiremockPort = wireMockServer.port();
   }
 
   private static void stubRequest(
@@ -134,11 +131,11 @@ public class MockServerTest {
             EmisClientConfig.Service.builder()
                 .url(
                     "http://localhost:"
-                        + wiremockPort
+                        + wireMockServer.port()
                         + "/VIERSService/eMIS/v2/MilitaryInformationService")
                 .wsdl(
                     "http://localhost:"
-                        + wiremockPort
+                        + wireMockServer.port()
                         + "/VIERSService/eMIS/v2/MilitaryInformationService.wsdl")
                 .build())
         .ssl(
