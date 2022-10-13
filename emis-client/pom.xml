@@ -14,6 +14,7 @@
     <github.repository-name>lighthouse-enterprise-military-information-service</github.repository-name>
     <wiremock.version>2.27.2</wiremock.version>
     <jacoco.coverage>0.10</jacoco.coverage>
+    <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
   </properties>
   <dependencies>
     <dependency>
@@ -42,14 +43,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <!-- If this plugin is not included, then maven will literally not even run the unit tests. -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M7</version>
-      </plugin>
-    </plugins>
-  </build>
 </project>
