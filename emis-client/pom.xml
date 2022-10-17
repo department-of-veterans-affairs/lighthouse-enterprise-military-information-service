@@ -14,7 +14,6 @@
     <github.repository-name>lighthouse-enterprise-military-information-service</github.repository-name>
     <wiremock.version>2.27.2</wiremock.version>
     <jacoco.coverage>0.10</jacoco.coverage>
-    <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
   </properties>
   <dependencies>
     <dependency>
@@ -27,19 +26,14 @@
       <artifactId>lombok</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.github.tomakehurst</groupId>
       <artifactId>wiremock</artifactId>
       <version>${wiremock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
