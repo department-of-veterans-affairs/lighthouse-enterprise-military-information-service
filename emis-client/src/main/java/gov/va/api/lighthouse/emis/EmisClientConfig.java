@@ -25,9 +25,25 @@ public class EmisClientConfig {
 
   private Service veteranStatusServiceV1;
 
-  @Builder.Default private Duration connectionTimeout = Duration.ofSeconds(5);
+  private Duration connectionTimeout;
 
-  @Builder.Default private Duration readTimeout = Duration.ofSeconds(10);
+  private Duration readTimeout;
+
+  /** Lazy getter for connection timeout; if no connection timeout defined, define a default. */
+  public Duration getConnectionTimeout() {
+    if (connectionTimeout == null) {
+      connectionTimeout = Duration.ofSeconds(5);
+    }
+    return connectionTimeout;
+  }
+
+  /** Lazy getter for read timeout; if no read timeout defined, define a default. */
+  public Duration getReadTimeout() {
+    if (readTimeout == null) {
+      readTimeout = Duration.ofSeconds(10);
+    }
+    return readTimeout;
+  }
 
   @Data
   @Builder
