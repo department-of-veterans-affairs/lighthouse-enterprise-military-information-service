@@ -115,16 +115,30 @@ public class SoapEmisClient implements EmisClient {
   private <T> T port(EmisClientConfig.Service svc, Function<URL, T> toPort) {
     try {
       T port = toPort.apply(new URL(svc.getWsdl()));
-      if (sslContext.isPresent()) {
-        ((BindingProvider) port)
-            .getRequestContext()
-            .put(
-                "com.sun.xml.ws.transport.https.client.SSLSocketFactory",
-                sslContext.get().getSocketFactory());
-      }
-      ((BindingProvider) port)
+      final var bindingProvider = ((BindingProvider) port);
+      sslContext.ifPresent(
+          context ->
+              bindingProvider
+                  .getRequestContext()
+                  .put(
+                      "com.sun.xml.ws.transport.https.client.SSLSocketFactory",
+                      context.getSocketFactory()));
+      bindingProvider
           .getRequestContext()
           .put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, svc.getUrl());
+
+      bindingProvider
+          .getRequestContext()
+          .put(
+              com.sun.xml.ws.developer.JAXWSProperties.CONNECT_TIMEOUT,
+              (int) config.getConnectionTimeout().toMillis());
+
+      bindingProvider
+          .getRequestContext()
+          .put(
+              com.sun.xml.ws.developer.JAXWSProperties.REQUEST_TIMEOUT,
+              (int) config.getReadTimeout().toMillis());
+
       return port;
     } catch (InaccessibleWSDLException e) {
       log.error("WSDL is inaccessible: {}", e.getMessage());
