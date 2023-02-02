@@ -6,14 +6,14 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
 import com.github.tomakehurst.wiremock.matching.UrlPattern;
+import gov.va.viers.cdi.emis.requestresponse.v1.EMISveteranStatusResponseType;
 import gov.va.viers.cdi.emis.requestresponse.v2.EMISdeploymentResponseType;
 import gov.va.viers.cdi.emis.requestresponse.v2.EMISguardReserveServicePeriodsResponseType;
 import gov.va.viers.cdi.emis.requestresponse.v2.EMISserviceEpisodeResponseType;
@@ -98,12 +98,27 @@ public class MockServerTest {
           </env:Body>
       </env:Envelope>
       """;
-    stubRequest(
-        wireMockServer,
-        WireMock::post,
-        claimant_response,
-        "/VIERSService/eMIS/v2/MilitaryInformationService",
-        Duration.ofSeconds(1));
+
+    var status_response =
+        """
+        <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+            <env:Header>
+                <NS2:essResponseCode xmlns:NS2="http://va.gov/ess/message/v1">Success</NS2:essResponseCode>
+            </env:Header>
+            <env:Body xmlns:ns2="http://viers.va.gov/cdi/eMIS/RequestResponse/v1"
+                xmlns:ns4="http://viers.va.gov/cdi/eMIS/commonService/v1"
+                xmlns:ns3="http://viers.va.gov/cdi/CDI/commonService/v1">
+                <ns2:veteranStatus>
+                    <ns4:edipi>1242991946</ns4:edipi>
+                    <ns4:title38StatusCode>V1</ns4:title38StatusCode>
+                    <ns4:post911DeploymentIndicator>Y</ns4:post911DeploymentIndicator>
+                    <ns4:post911CombatIndicator>N</ns4:post911CombatIndicator>
+                    <ns4:pre911DeploymentIndicator>N</ns4:pre911DeploymentIndicator>
+                </ns2:veteranStatus>
+            </env:Body>
+        </env:Envelope>
+        """;
+
     String claimant_wsdl =
         String.join(
             "",
@@ -117,6 +132,14 @@ public class MockServerTest {
             Files.readAllLines(
                 Paths.get(
                     "../emis-model/src/main/resources/META-INF/wsdl/v1/eMISVeteranStatusService.wsdl")));
+
+    stubRequest(
+        wireMockServer,
+        WireMock::post,
+        claimant_response,
+        "/VIERSService/eMIS/v2/MilitaryInformationService",
+        Duration.ofSeconds(1));
+
     stubRequest(
         wireMockServer,
         WireMock::get,
@@ -126,9 +149,16 @@ public class MockServerTest {
 
     stubRequest(
         wireMockServer,
+        WireMock::post,
+        status_response,
+        "/VIERSService/eMIS/v1/VeteranStatusService",
+        Duration.ofSeconds(0));
+
+    stubRequest(
+        wireMockServer,
         WireMock::get,
         status_wsdl,
-        "/VIERSService/eMIS/v1/VeteranStatusService.wsdl",
+        "/VIERSService/eMIS/v1/eMISVeteranStatusService.wsdl",
         Duration.ZERO);
     wireMockServer.start();
   }
@@ -156,7 +186,7 @@ public class MockServerTest {
                 .wsdl(
                     "http://localhost:"
                         + wireMockServer.port()
-                        + "/VIERSService/eMIS/v1/VeteranStatusService.wsdl")
+                        + "/VIERSService/eMIS/v1/eMISVeteranStatusService.wsdl")
                 .build())
         .militaryInformationServiceV2(
             EmisClientConfig.Service.builder()
@@ -201,6 +231,9 @@ public class MockServerTest {
         serviceEpisodesRequestInspector = mock(Consumer.class);
     Consumer<EMISserviceEpisodeResponseType> serviceEpisodesResponseInspector =
         mock(Consumer.class);
+    Consumer<gov.va.viers.cdi.emis.requestresponse.v1.InputEdiPiOrIcn>
+        veteranStatusRequestInspector = mock(Consumer.class);
+    Consumer<EMISveteranStatusResponseType> veteranStatusResponseInspector = mock(Consumer.class);
 
     var config = getBaseConfig(Duration.ofSeconds(10), Duration.ofSeconds(10));
     SoapEmisClient client =
@@ -211,20 +244,31 @@ public class MockServerTest {
             .guardReserveServiceResponseInspector(guardReserveServiceResponseInspector)
             .serviceEpisodesRequestInspector(serviceEpisodesRequestInspector)
             .serviceEpisodesResponseInspector(serviceEpisodesResponseInspector)
+            .veteranStatusRequestInspector(veteranStatusRequestInspector)
+            .veteranStatusResponseInspector(veteranStatusResponseInspector)
             .config(config)
             .build();
     var request = InputEdiPiOrIcn.builder().build();
+
     client.deploymentRequest(request);
-    verify(deploymentRequestInspector).accept(any());
-    verify(deploymentResponseInspector).accept(any());
+    verify(deploymentRequestInspector, times(1)).accept(any());
+    verify(deploymentResponseInspector, times(1)).accept(any());
+
 
     client.guardReserveServiceRequest(request);
-    verify(guardReserveServiceRequestInspector).accept(any());
-    verify(guardReserveServiceResponseInspector).accept(any());
+    verify(guardReserveServiceRequestInspector, times(1)).accept(any());
+    verify(guardReserveServiceResponseInspector, times(1)).accept(any());
+
 
     client.serviceEpisodesRequest(request);
-    verify(serviceEpisodesRequestInspector).accept(any());
-    verify(serviceEpisodesResponseInspector).accept(any());
+    verify(serviceEpisodesRequestInspector, times(1)).accept(any());
+    verify(serviceEpisodesResponseInspector, times(1)).accept(any());
+
+
+    client.veteranStatusRequest(
+        gov.va.viers.cdi.emis.requestresponse.v1.InputEdiPiOrIcn.builder().build());
+    verify(veteranStatusRequestInspector, times(1)).accept(any());
+    verify(veteranStatusResponseInspector, times(1)).accept(any());
   }
 
   @Test
