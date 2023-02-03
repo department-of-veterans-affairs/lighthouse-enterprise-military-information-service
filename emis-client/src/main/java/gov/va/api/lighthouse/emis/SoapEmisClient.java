@@ -14,11 +14,13 @@ import java.net.URL;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import javax.xml.ws.BindingProvider;
+import lombok.Builder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +32,69 @@ public class SoapEmisClient implements EmisClient {
 
   private final EmisClientConfig config;
 
-  private SoapEmisClient(EmisClientConfig config) {
+  /** Inspect the deployment message before it is sent. */
+  private final Consumer<gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn>
+      deploymentRequestInspector;
+
+  /** Inspect the deployment message after it is received. */
+  private final Consumer<EMISdeploymentResponseType> deploymentResponseInspector;
+
+  /** Inspect the guardReserveService message before it is sent. */
+  private final Consumer<gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn>
+      guardReserveServiceRequestInspector;
+
+  /** Inspect the guardReserveService message after it is received. */
+  private final Consumer<EMISguardReserveServicePeriodsResponseType>
+      guardReserveServiceResponseInspector;
+
+  /** Inspect the serviceEpisodes message before it is sent. */
+  private final Consumer<gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn>
+      serviceEpisodesRequestInspector;
+
+  /** Inspect the serviceEpisodes message after it is received. */
+  private final Consumer<EMISserviceEpisodeResponseType> serviceEpisodesResponseInspector;
+
+  /** Inspect the veteranStatus message before it is sent. */
+  private final Consumer<InputEdiPiOrIcn> veteranStatusRequestInspector;
+
+  /** Inspect the veteranStatus message after it is received. */
+  private final Consumer<EMISveteranStatusResponseType> veteranStatusResponseInspector;
+
+  @Builder
+  private SoapEmisClient(
+      EmisClientConfig config,
+      Consumer<gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn> deploymentRequestInspector,
+      Consumer<EMISdeploymentResponseType> deploymentResponseInspector,
+      Consumer<gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn>
+          guardReserveServiceRequestInspector,
+      Consumer<EMISguardReserveServicePeriodsResponseType> guardReserveServiceResponseInspector,
+      Consumer<gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn>
+          serviceEpisodesRequestInspector,
+      Consumer<EMISserviceEpisodeResponseType> serviceEpisodesResponseInspector,
+      Consumer<InputEdiPiOrIcn> veteranStatusRequestInspector,
+      Consumer<EMISveteranStatusResponseType> veteranStatusResponseInspector) {
+
+    this.deploymentRequestInspector = doNothingUnlessSet(deploymentRequestInspector);
+    this.deploymentResponseInspector = doNothingUnlessSet(deploymentResponseInspector);
+    this.guardReserveServiceRequestInspector =
+        doNothingUnlessSet(guardReserveServiceRequestInspector);
+    this.guardReserveServiceResponseInspector =
+        doNothingUnlessSet(guardReserveServiceResponseInspector);
+    this.serviceEpisodesRequestInspector = doNothingUnlessSet(serviceEpisodesRequestInspector);
+    this.serviceEpisodesResponseInspector = doNothingUnlessSet(serviceEpisodesResponseInspector);
+    this.veteranStatusRequestInspector = doNothingUnlessSet(veteranStatusRequestInspector);
+    this.veteranStatusResponseInspector = doNothingUnlessSet(veteranStatusResponseInspector);
+
     this.config = config;
     this.sslContext = createSslContext(config.getSsl());
   }
 
+  private static <T> Consumer<T> doNothingUnlessSet(Consumer<T> action) {
+    return action == null ? ignored -> {} : action;
+  }
+
   public static SoapEmisClient of(EmisClientConfig config) {
-    return new SoapEmisClient(config);
+    return new SoapEmisClient(config, null, null, null, null, null, null, null, null);
   }
 
   @SneakyThrows
@@ -65,13 +123,16 @@ public class SoapEmisClient implements EmisClient {
   public EMISdeploymentResponseType deploymentRequest(
       gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn ediPiOrIcn) {
     try {
+      this.deploymentRequestInspector.accept(ediPiOrIcn);
       var port =
           port(
               config.getMilitaryInformationServiceV2(),
               url ->
                   new EMISMilitaryInformationSerivcePortTypes_Service(url)
                       .getEMISMilitaryInformationSerivcePort());
-      return port.getDeployment(ediPiOrIcn);
+      var response = port.getDeployment(ediPiOrIcn);
+      this.deploymentResponseInspector.accept(response);
+      return response;
     } catch (ServerSOAPFaultException e) {
       log.error("Received invalid response from service: {}", e.getMessage());
       throw new Exceptions.InvalidServiceResponse(e.getMessage(), e);
@@ -82,13 +143,16 @@ public class SoapEmisClient implements EmisClient {
   public EMISguardReserveServicePeriodsResponseType guardReserveServiceRequest(
       gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn ediPiOrIcn) {
     try {
+      guardReserveServiceRequestInspector.accept(ediPiOrIcn);
       var port =
           port(
               config.getMilitaryInformationServiceV2(),
               url ->
                   new EMISMilitaryInformationSerivcePortTypes_Service(url)
                       .getEMISMilitaryInformationSerivcePort());
-      return port.getGuardReserveServicePeriods(ediPiOrIcn);
+      var response = port.getGuardReserveServicePeriods(ediPiOrIcn);
+      guardReserveServiceResponseInspector.accept(response);
+      return response;
     } catch (ServerSOAPFaultException e) {
       log.error("Received invalid response from service: {}", e.getMessage());
       throw new Exceptions.InvalidServiceResponse(e.getMessage(), e);
@@ -98,14 +162,14 @@ public class SoapEmisClient implements EmisClient {
   @Override
   public ResponseEntity<String> militaryInformationServiceV2Health() {
     try {
+      log.info("militaryInformationServiceV2 health check running...");
       port(
           config.getMilitaryInformationServiceV2(),
           url ->
               new EMISMilitaryInformationSerivcePortTypes_Service(url)
                   .getEMISMilitaryInformationSerivcePort());
-    } catch (Exceptions.InaccessibleServiceDefinition e) {
-      throw e;
-    } catch (Exceptions.InvalidUrl e) {
+      log.info("militaryInformationServiceV2 is healthy");
+    } catch (Exceptions.InaccessibleServiceDefinition | Exceptions.InvalidUrl e) {
       throw e;
     }
     return ResponseEntity.ok("Up");
@@ -154,13 +218,17 @@ public class SoapEmisClient implements EmisClient {
   public EMISserviceEpisodeResponseType serviceEpisodesRequest(
       gov.va.viers.cdi.emis.requestresponse.v2.InputEdiPiOrIcn ediPiOrIcn) {
     try {
+
+      this.serviceEpisodesRequestInspector.accept(ediPiOrIcn);
       var port =
           port(
               config.getMilitaryInformationServiceV2(),
               url ->
                   new EMISMilitaryInformationSerivcePortTypes_Service(url)
                       .getEMISMilitaryInformationSerivcePort());
-      return port.getMilitaryServiceEpisodes(ediPiOrIcn);
+      var response = port.getMilitaryServiceEpisodes(ediPiOrIcn);
+      this.serviceEpisodesResponseInspector.accept(response);
+      return response;
     } catch (ServerSOAPFaultException e) {
       log.error("Received invalid response from service: {}", e.getMessage());
       throw new Exceptions.InvalidServiceResponse(e.getMessage(), e);
@@ -170,13 +238,16 @@ public class SoapEmisClient implements EmisClient {
   @Override
   public EMISveteranStatusResponseType veteranStatusRequest(InputEdiPiOrIcn ediPiOrIcn) {
     try {
+      this.veteranStatusRequestInspector.accept(ediPiOrIcn);
       var port =
           port(
               config.getVeteranStatusServiceV1(),
               url ->
                   new EMISVeteranStatusServicePortTypes_Service(url)
                       .getEMISVeteranStatusServicePort());
-      return port.getVeteranStatus(ediPiOrIcn);
+      var response = port.getVeteranStatus(ediPiOrIcn);
+      this.veteranStatusResponseInspector.accept(response);
+      return response;
     } catch (ServerSOAPFaultException e) {
       log.error("Received invalid response from service: {}", e.getMessage());
       throw new Exceptions.InvalidServiceResponse(e.getMessage(), e);
