@@ -17,7 +17,7 @@
     <jacoco.skip>true</jacoco.skip>
     <jaxws-maven-plugin.version>2.6.2</jaxws-maven-plugin.version>
     <jaxws-rt.version>2.3.2</jaxws-rt.version>
-    <lombok-xjc-plugin.version>1.0.4</lombok-xjc-plugin.version>
+    <lombok-xjc-plugin.version>1.0.8</lombok-xjc-plugin.version>
     <spotbugs.skip>true</spotbugs.skip>
     <jarranger.skip>true</jarranger.skip>
     <fmt.skip>true</fmt.skip>
