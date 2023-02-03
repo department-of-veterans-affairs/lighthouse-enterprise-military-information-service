@@ -8,7 +8,7 @@
   </parent>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>emis-parent</artifactId>
-  <version>4.0.5-SNAPSHOT</version>
+  <version>4.0.6-SNAPSHOT</version>
   <packaging>pom</packaging>
   <properties>
     <github.repository-name>lighthouse-enterprise-military-information-service</github.repository-name>
