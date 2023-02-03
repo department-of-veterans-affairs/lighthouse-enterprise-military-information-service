@@ -254,16 +254,13 @@ public class MockServerTest {
     verify(deploymentRequestInspector, times(1)).accept(any());
     verify(deploymentResponseInspector, times(1)).accept(any());
 
-
     client.guardReserveServiceRequest(request);
     verify(guardReserveServiceRequestInspector, times(1)).accept(any());
     verify(guardReserveServiceResponseInspector, times(1)).accept(any());
 
-
     client.serviceEpisodesRequest(request);
     verify(serviceEpisodesRequestInspector, times(1)).accept(any());
     verify(serviceEpisodesResponseInspector, times(1)).accept(any());
-
 
     client.veteranStatusRequest(
         gov.va.viers.cdi.emis.requestresponse.v1.InputEdiPiOrIcn.builder().build());
