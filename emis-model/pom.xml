@@ -9,7 +9,7 @@
   </parent>
   <groupId>gov.va.api.lighthouse</groupId>
   <artifactId>emis-model</artifactId>
-  <version>4.0.6</version>
+  <version>4.0.7-SNAPSHOT</version>
   <packaging>jar</packaging>
   <properties>
     <checkstyle.skip>true</checkstyle.skip>
